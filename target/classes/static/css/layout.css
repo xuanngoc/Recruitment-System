@@ -1,0 +1,37 @@
+.logo {
+	font-family: 'Rowdies', cursive;
+    color:#6F1E51;
+    font-size: 45px;
+}
+
+.user-name {
+    color: #6F1E51;
+}
+
+#horizontal-bar {
+    background-color: #70a1ff;
+    z-index: 2;
+    height: 50px;
+}
+
+#side-bar {
+    background-color: #2B333E;
+}
+
+#content {
+    background-color: #F5F5FA;
+}
+
+.item {
+    color: #FFFFFF;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#footer {
+	color: white;
+}

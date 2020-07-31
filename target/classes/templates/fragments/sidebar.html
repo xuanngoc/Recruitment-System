@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="sidebar">
+	<div class="col-sm-3 col-md-3 col-lg-2 col-xl-2 vh-100 position-fixed" id="side-bar">
+                <div style="height: 90%;">
+                    <nav class="navbar navbar-light mb-auto" >
+                        <ul class="w-100">
+                            <li class="nav-item item">
+                                <a class="nav-link active" href="#"><i class="fas fa-home"></i> Home</a>
+                            </li>
+                            <li class="nav-item item">
+                                <a class="nav-link" href="#">Tutorials</a>
+                            </li>
+                            <li class="nav-item item">
+                                <a class="nav-link" href="#">Articles</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                
+                <div class="sb-sidenav-footer text-center" id="footer" style="height: 10%;">
+                  <p>&copy; TI30h3</p>
+              	</div>
+    </div>		
+</th:block>
+</body>
+</html>
