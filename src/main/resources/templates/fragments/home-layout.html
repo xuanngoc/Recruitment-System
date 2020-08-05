@@ -16,10 +16,10 @@
 	<link rel="icon" type="image/gif" th:href="@{/img/favicon.png}">
     <title>EZ</title>
 </head>
-<body>
-	<div class="container-fluid">
+<body >
+	<div class="container-fluid" style="background-color: #ecf0f1;">
 	    <th:block th:replace="fragments/header :: header"/>
-	    <div class="row" style="margin-top:55px"> 
+	    <div class="container bg-white" style="margin-top:55px;"> 
 	    	 <th:block layout:fragment="content"/>
 	    </div>
 	   

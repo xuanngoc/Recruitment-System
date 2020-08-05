@@ -26,7 +26,7 @@ public class UserPrincipal implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authority = new ArrayList<GrantedAuthority>();
-		authority.add(new SimpleGrantedAuthority(ApplicationUserRole.MANAGER.toString()));
+		authority.add(new SimpleGrantedAuthority(user.getRole()));
 		return authority;  
 	}
 
@@ -37,7 +37,7 @@ public class UserPrincipal implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return user.getUserName();
+		return user.getUsername();
 	}
 
 	@Override
