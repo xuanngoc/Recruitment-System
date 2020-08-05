@@ -8,15 +8,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ezjob.model.SkillTag;
+import ezjob.service.EmployerRegisterService;
 import ezjob.service.SkillTagService;
 
 @Controller
 @RequestMapping("/management/")
 public class ManagementController {
 
-	@Autowired
 	private SkillTagService skillTagService;
+	private EmployerRegisterService employerRegisterService;
 	
+	@Autowired
+	public void setSkillTagService(SkillTagService skillTagService) {
+		this.skillTagService = skillTagService;
+	}
+	
+	@Autowired
+	public void setEmployerRegisterService(EmployerRegisterService employerRegisterService) {
+		this.employerRegisterService = employerRegisterService;
+	}
+
 	@GetMapping
 	public String management() {
 		return "management/management";
@@ -35,6 +46,11 @@ public class ManagementController {
 		return "redirect:skill-tag";
 	}
 	
+	@GetMapping("employer-register-request")
+	public String employerRegisterRequest(Model model) {
+		model.addAttribute("employerRegisterRequests", employerRegisterService.getAllEmployerRegisters());
+		return "management/employer/employer-register-request";
+	}
 	
 	
 }

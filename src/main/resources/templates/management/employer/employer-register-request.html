@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>EZ Jobs | Quản lý</title>
+    <script type="text/javascript" th:src="@{/js/employer-register-request.js}" ></script>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag" id="content">
+    <div class="col-sm-9 col-md-9 col-lg-10 col-xl-10 offset-sm-3 offset-md-3 offset-lg-2 offset-xl-2" >
+    	<h2 class="text-center">Danh sách các yêu cầu đang chờ phản hồi</h2>
+        <div class="row">
+        	<table class="table col-sm-12 col-10">
+			  <thead>
+			    <tr>
+			      <th scope="col">STT</th>
+			      <th scope="col">Tên công ty</th>
+			      <th scope="col">Website công ty</th>
+			      <th scope="col">Thành phố</th>
+			      <th scope="col">Người gửi yêu cầu</th>
+			      <th scope="col">Chức vụ</th>
+			      <th scope="col">Email</th>
+			      <th scope="col">Số điện thoại</th>     
+			      <th scope="col">Chấp nhận</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr th:each="employerRegister, index : ${employerRegisterRequests}">
+			   	  <th scope="row" th:text="${index.count}"></th>
+			      <th scope="row" th:text="${employerRegister.companyName}"></th>
+			      <td th:text="${employerRegister.companyWebsite}"></td>
+			      <td th:text="${employerRegister.city}"></td>
+			      <td th:text="${employerRegister.fullname}"></td>
+			      <td th:text="${employerRegister.title}"></td>
+			      <td th:text="${employerRegister.email}"></td>
+			      <td th:text="${employerRegister.phone}"></td>
+			      <td><button class="btn btn-success" onclick="acceptRequestEmployerRegister()">Chấp nhận</button></td>
+			    </tr>
+			  </tbody>
+			</table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
