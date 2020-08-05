@@ -17,14 +17,10 @@ public class HomeController {
 		return "employer-register";
 	}
 	
-	@RequestMapping("/management")
-	public String admin1() {
-		return "admin";
-	}
 	
 	@RequestMapping("/employer")
 	public String admin3() {
-		return "admin";
+		return "employer";
 	}
 	
 }
