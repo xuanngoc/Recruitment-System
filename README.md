@@ -1,2 +1,2 @@
 # Recruitment-System
-A mock project when I am intern at Rks Hanoi
+A mock project when I am an intern at Rks Hanoi
