@@ -23,8 +23,20 @@ public class EmployerRegisterService {
 		return employerRegisterRepository.findAll();
 	}
 	
+	public List<EmployerRegister> getAllEmployerRegistersPending() {
+		return employerRegisterRepository.findByPending(true);
+	}
+	
 	public EmployerRegister getEmployerRegisterById(long id) {
 		return employerRegisterRepository.findById(id).get();
+	}
+	
+	public void acceptRequestPending(long id) {
+		EmployerRegister er = employerRegisterRepository.findById(id).get();
+		if (er != null) {
+			er.setPending(false);
+			employerRegisterRepository.save(er);
+		}
 	}
 	
 	public void saveOrUpdate(EmployerRegister employerRegister) {

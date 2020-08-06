@@ -15,7 +15,15 @@
                                 <div class="dropdown-divider"></div>
                             </li>
                             <li class="nav-item item">
-                                <a class="nav-link" href="#">Quản lý nhà tuyển dụng</a>
+                            	<div class="dropdown">
+								  <a class="nav-link dropdown-toggle" type="button" id="dropdownEmployerManagement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    Quản lý nhà tuyển dụng
+								  </a>
+								  <div class="dropdown-menu" aria-labelledby="dropdownEmployerManagement">
+								    <a class="dropdown-item" th:href="@{employer-register-request}">Yêu cầu đăng ký nhà tuyển dụng</a>
+								    <a class="dropdown-item" href="#">Quản lý nhà quyển dụng</a>
+								  </div>
+								</div>                                
                                 <div class="dropdown-divider"></div>
                             </li>
                             <li class="nav-item item">

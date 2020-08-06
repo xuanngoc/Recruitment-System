@@ -21,9 +21,6 @@ public class User {
 	@Column(name = "PASSWORD", length = 100)
 	private String password;
 	
-	@Column(name = "FULL_NAME", length = 50)
-	private String fullName;
-	
 	@Column(name = "EMAIL", length = 50)
 	private String email;
 	
@@ -49,14 +46,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
 	}
 
 	public String getEmail() {
