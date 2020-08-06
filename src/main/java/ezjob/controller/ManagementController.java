@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ezjob.model.SkillTag;
 import ezjob.service.EmployerRegisterService;
 import ezjob.service.SkillTagService;
+import ezjob.service.UserDetailServiceImp;
 
 @Controller
 @RequestMapping("/management/")
@@ -17,6 +19,7 @@ public class ManagementController {
 
 	private SkillTagService skillTagService;
 	private EmployerRegisterService employerRegisterService;
+	private UserDetailServiceImp userDetailServiceImp;
 	
 	@Autowired
 	public void setSkillTagService(SkillTagService skillTagService) {
@@ -26,6 +29,11 @@ public class ManagementController {
 	@Autowired
 	public void setEmployerRegisterService(EmployerRegisterService employerRegisterService) {
 		this.employerRegisterService = employerRegisterService;
+	}
+	
+	@Autowired
+	public void setUserDetailServiceImp(UserDetailServiceImp userDetailServiceImp) {
+		this.userDetailServiceImp = userDetailServiceImp;
 	}
 
 	@GetMapping
@@ -48,8 +56,20 @@ public class ManagementController {
 	
 	@GetMapping("employer-register-request")
 	public String employerRegisterRequest(Model model) {
-		model.addAttribute("employerRegisterRequests", employerRegisterService.getAllEmployerRegisters());
+		model.addAttribute("employerRegisterRequests", employerRegisterService.getAllEmployerRegistersPending());
 		return "management/employer/employer-register-request";
+	}
+	
+	/*
+	 * When manager accept request, create a User with username is email registed and random password,
+	 * then send them via email. The employer will login and update their information
+	 * */
+	
+	@PostMapping("employer-register-request/{id}")
+	public String acceptEmployerRegisterRequestPending(@PathVariable long id) {
+		employerRegisterService.acceptRequestPending(id);
+		userDetailServiceImp.createEmployerUser(employerRegisterService.getEmployerRegisterById(id));
+		return "redirect:/management/employer-register-request";
 	}
 	
 	

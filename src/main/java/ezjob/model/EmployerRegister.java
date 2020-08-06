@@ -1,10 +1,19 @@
 package ezjob.model;
 
+
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 public class EmployerRegister {
@@ -33,7 +42,15 @@ public class EmployerRegister {
 	
 	@Column(name = "PHONE", length = 15)
 	private String phone;
+	
+	@Column(name = "PENDING")
+	private boolean pending = true;
 
+	@CreationTimestamp
+	@Column(name = "SENT_AT")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date sentAt;
+	
 	public EmployerRegister() {	}
 	
 	public EmployerRegister(long employerRegisterId, String companyName, String companyWebsite, String city,
@@ -111,5 +128,24 @@ public class EmployerRegister {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
+	public boolean isPending() {
+		return pending;
+	}
+
+	public void setPending(boolean pending) {
+		this.pending = pending;
+	}
+
+	public Date getSentAt() {
+		return sentAt;
+	}
+
+	public void setSentAt(Date sentAt) {
+		this.sentAt = sentAt;
+	}
 	
+	public String getDateSentFormat() {
+		return new SimpleDateFormat("dd-MM-YYYY HH:mm").format(sentAt);
+	}
 }
