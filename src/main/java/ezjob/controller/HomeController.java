@@ -37,9 +37,6 @@ public class HomeController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping("/employer")
-	public String admin3() {
-		return "employer";
-	}
+
 	
 }

@@ -54,7 +54,7 @@ public class UserDetailServiceImp implements UserDetailsService {
 	public void createEmployerUser(EmployerRegister employerRegister) {
 		User user = new User();
 		user.setUsername(employerRegister.getEmail());
-		user.setPassword(UUID.randomUUID().toString());
+		user.setPassword(UUID.randomUUID().toString()); // not hash password yet
 		user.setEmail(employerRegister.getEmail());
 		user.setRole(ApplicationUserRole.EMPLOYER.name());
 		user.setPhone(employerRegister.getPhone());

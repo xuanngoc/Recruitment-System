@@ -57,7 +57,7 @@ public class ManagementController {
 	@GetMapping("employer-register-request")
 	public String employerRegisterRequest(Model model) {
 		model.addAttribute("employerRegisterRequests", employerRegisterService.getAllEmployerRegistersPending());
-		return "management/employer/employer-register-request";
+		return "management/employer-register-request";
 	}
 	
 	/*
