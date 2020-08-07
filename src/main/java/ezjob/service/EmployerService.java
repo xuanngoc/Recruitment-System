@@ -1,21 +1,27 @@
 package ezjob.service;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ezjob.model.Employer;
 import ezjob.repository.EmployerRepository;
+import ezjob.repository.UserRepository;
 
 @Service
 public class EmployerService {
 
 	private EmployerRepository employerRepository;
+	private UserRepository userRepository;
 
 	@Autowired
 	public void setEmployerRepository(EmployerRepository employerRepository) {
 		this.employerRepository = employerRepository;
+	}
+	
+	@Autowired
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
 	
 	public Employer getEmployerById(long id) throws Exception {
@@ -30,5 +36,9 @@ public class EmployerService {
 		employerRepository.save(employer);
 	}
 	
+	public Employer getEmployerByUsername(String username) {
+		long userId = userRepository.findByUsername(username).getUserId();
+		return employerRepository.findByUserId(userId);
+	}
 	
 }
