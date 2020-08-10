@@ -90,7 +90,7 @@
 					          <span aria-hidden="true">&times;</span>
 					        </button>
 					      </div>
-					      <form class="model-body mr-5 ml-5" th:action=@{update-info} method="POST" th:object="${employer}" >
+					      <form class="model-body mr-5 ml-5" th:action=@{info} method="POST" th:object="${employer}" >
 					      	<input type="hidden" th:field=*{user}/>
 					      	<input type="hidden" th:field=*{employerId}/>
 					      	<div class="form-group">

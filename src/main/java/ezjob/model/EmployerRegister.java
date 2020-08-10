@@ -145,7 +145,4 @@ public class EmployerRegister {
 		this.sentAt = sentAt;
 	}
 	
-	public String getDateSentFormat() {
-		return new SimpleDateFormat("dd-MM-YYYY HH:mm").format(sentAt);
-	}
 }
