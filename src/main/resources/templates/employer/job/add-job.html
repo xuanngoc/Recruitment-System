@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/employer-layout}">
+<head>
+    <title>EZ Jobs | Quản lý việc làm</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag" id="content">
+	<div class="col-sm-3 col-sm-3 col-sm-2 col-xl-2"></div>
+    <div class="col-sm-9 col-md-9 col-lg-10 col-xl-10" >
+    	<h2 class="text-center mt-2">Đăng tin việc làm</h2>
+        
+        <div class="row">
+        	<form class="col-sm-12 col-md-6 offset-md-3" th:action=@{job} method="POST" th:object="${job}" >
+        		<input type="hidden" th:field="*{jobId}"/>
+				<input type="hidden" th:field=*{employer} />
+				<span th:text="${employer.employerId}"></span>
+				<div class="form-group">
+					<label for="title">Tiêu đề công việc</label>
+				    <input type="text" class="form-control" id="title" th:field="*{title}">
+				</div>
+				<div class="form-group">
+					<label for="salary">Mức lương</label>
+				    <input type="text" class="form-control" id="salary" th:field=*{salary}>
+				</div>
+				<div class="form-group">
+					<label for="salary">Kĩ năng</label>
+					<input type="checkbox" name="skilltags"
+			            th:each="skill : ${skillTags}"
+			            th:text="${skill.skillTagName}"
+			            th:value="${skill.skillTagId}"
+			            th:field="*{skillTags}"
+			        />
+				</div>
+				<div class="form-group">
+					<label for="description">Mô tả</label>
+					<textarea class="form-control" id="description" rows="25" th:field=*{description}></textarea>
+				</div>
+				<div class="row">
+				<div class="col-md-4"></div>
+					<input type="submit" class="btn btn-success col-md-4 mb-5" value="Lưu"/>
+				</div>			
+			</form>
+					
+        </div>
+        
+    </div>    
+</div>
+</body>
+</html>

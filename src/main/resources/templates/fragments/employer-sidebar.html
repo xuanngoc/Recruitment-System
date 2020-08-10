@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <th:block th:fragment="sidebar">
-	<div class="col-sm-3 col-md-3 col-lg-2 col-xl-2 vh-100 position-fixed" id="side-bar">
+	<div class="col-sm-3 col-md-3 col-lg-2 col-xl-2 vh-100 position-fixed" id="side-bar" style="z-index: 2;">
                 <div style="height: 90%;">
                     <nav class="navbar navbar-light mb-auto" >
                         <ul class="w-100">
@@ -15,7 +15,7 @@
                                 <div class="dropdown-divider"></div>
                             </li>
                             <li class="nav-item item">
-                            	<a class="nav-link" href="#">Quản lý bài đăng việc làm</a>
+                            	<a class="nav-link" href="job">Quản lý thông tin việc làm</a>
                                 <div class="dropdown-divider"></div>
                             </li>
                            

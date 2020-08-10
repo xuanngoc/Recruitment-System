@@ -41,4 +41,7 @@ public class EmployerService {
 		return employerRepository.findByUserId(userId);
 	}
 	
+	public long getEmployerIdByUsername(String username) {
+		return getEmployerByUsername(username).getEmployerId();
+	}
 }
