@@ -4,6 +4,8 @@
       layout:decorate="~{fragments/employer-layout}">
 <head>
     <title>EZ Jobs | Quản lý thông tin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+	<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag" id="content">
@@ -13,36 +15,36 @@
         
         <div class="row mt-5">
         	<div class="col-sm-2 col-md-3"></div>
-        	<div class="col-sm-8 col-md-6" th:object="${employer}">
+        	<form class="col-sm-8 col-md-6" th:action=@{info} method="POST" th:object="${employer}">
         		<div class="form-group">
 				    <label for="companyName">Tên công ty</label>
-				    <input type="text" class="form-control" id="companyName" th:field=*{companyName} disabled>
+				    <input type="text" class="form-control input-element" id="companyName" th:field=*{companyName} disabled>
 				</div>
 				<div class="form-group">
 				    <label for="city">Thành phố</label>
-				    <input type="text" class="form-control" id="city" th:field=*{city} disabled>
+				    <input type="text" class="form-control input-element" id="city" th:field=*{city} disabled>
 				</div>
 				<div class="form-group">
 				    <label for="country">Quốc gia</label>
-				    <input type="text" class="form-control" id="country" th:field=*{country} disabled>
+				    <input type="text" class="form-control input-element" id="country" th:field=*{country} disabled>
 				</div>
 				<div class="form-group">
 				    <label for="type">Loại công ty</label>
-				    <input type="text" class="form-control" id="type" th:field=*{type} disabled>
+				    <input type="text" class="form-control input-element" id="type" th:field=*{type} disabled>
 				</div>
 				<div class="form-group">
 				    <label for="size">Quy mô nhân viên</label>
-				    <input type="number" class="form-control" id="size" th:field=*{size} disabled>
+				    <input type="number" class="form-control input-element" id="size" th:field=*{size} disabled>
 				</div>
 				<div class="form-group">
-				    <label for="address">Địa chỉ</label>
-				    <input type="text" class="form-control" id="address" th:field=*{address} disabled>
+				    <label for="address ">Địa chỉ</label>
+				    <input type="text" class="form-control input-element" id="address" th:field=*{address} disabled>
 				</div>
 				<div class="row">
 					<div class="col-sm-0 col-md-2"></div>
 					<div class="form-group col-sm-3">
 					    <label for="companyName">Ngày</label>
-					    <select class="form-control" id="startingDay" th:field=*{dayStartingOfWeek} disabled>
+					    <select class="form-control input-element" id="startingDay" th:field=*{dayStartingOfWeek} disabled>
 					      <option value="Thứ 2"selected>Thứ 2</option>
 					      <option value="Thứ 3" >Thứ 3</option>
 					      <option value="Thứ 4">Thứ 4</option>
@@ -55,7 +57,7 @@
 					<div class="col-sm-0 col-md-2"></div>
 					<div class="form-group col-sm-3">
 					    <label for="endingDay">Ngày</label>
-					    <select class="form-control" id="endingDay" th:field=*{dayEndingOfWeek} disabled>
+					    <select class="form-control input-element" id="endingDay" th:field=*{dayEndingOfWeek} disabled>
 					      <option value="Thứ 2">Thứ 2</option>
 					      <option value="Thứ 3" >Thứ 3</option>
 					      <option value="Thứ 4">Thứ 4</option>
@@ -69,98 +71,37 @@
 				</div>
 				<div class="form-group">
 				    <label for="description">Mô tả</label>
-				    <textarea class="form-control" id="description" rows="25" th:field=*{description} disabled></textarea>
+				    <textarea class="form-control input-element" id="description" rows="25" th:field=*{description} disabled></textarea>
 				</div>
 				<div class="row">
 					<div class="col-md-4"></div>
-		        	<button class="btn btn-success col-md-4 mb-5" data-toggle="modal" data-target="#editInfo">
+		        	<button class="btn btn-success col-md-4 mb-5" id="editInfoBtn" type="button" onclick="editInfo()">
 		        		Sửa thông tin công ty
 		        	</button>
+		        	<button class="btn btn-success col-md-4 mb-5 input-element" id="submitBtn" type="submit" style="display: none;">
+		        		Lưu thông tin
+		        	</button>
+		        	
 		        </div>	
 		        	
-        	</div>
+        	</form>
         </div>
     </div>
-    <div class="modal fade" id="editInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-					  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-					    <div class="modal-content mr-5 ml-5">
-					      <div class="modal-header">
-					        <h5 class="modal-title text-center" id="Title">Sửa thông tin công ty</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
-					        </button>
-					      </div>
-					      <form class="model-body mr-5 ml-5" th:action=@{info} method="POST" th:object="${employer}" >
-					      	<input type="hidden" th:field=*{user}/>
-					      	<input type="hidden" th:field=*{employerId}/>
-					      	<div class="form-group">
-							    <label for="companyName">Tên công ty</label>
-							    <input type="text" class="form-control" id="companyName" th:field=*{companyName}>
-							</div>
-							<div class="form-group">
-							    <label for="city">Thành phố</label>
-							    <input type="text" class="form-control" id="city" th:field=*{city}>
-							</div>
-							<div class="form-group">
-							    <label for="country">Quốc gia</label>
-							    <input type="text" class="form-control" id="country" th:field=*{country}>
-							</div>
-							<div class="form-group">
-							    <label for="type">Loại công ty</label>
-							    <input type="text" class="form-control" id="type" th:field=*{type}>
-							</div>
-							<div class="form-group">
-							    <label for="size">Quy mô nhân viên</label>
-							    <input type="number" class="form-control" id="size" th:field=*{size}>
-							</div>
-							<div class="form-group">
-							    <label for="address">Địa chỉ</label>
-							    <input type="text" class="form-control" id="address" th:field=*{address}>
-							</div>
-							<div class="row">
-								<div class="col-sm-0 col-md-2"></div>
-								<div class="form-group col-sm-3">
-								    <label for="companyName">Ngày</label>
-								    <select class="form-control" id="startingDay" th:field=*{dayStartingOfWeek}>
-								      <option value="Thứ 2"selected>Thứ 2</option>
-								      <option value="Thứ 3" >Thứ 3</option>
-								      <option value="Thứ 4">Thứ 4</option>
-								      <option value="Thứ 5">Thứ 5</option>
-								      <option value="Thứ 6">Thứ 6</option>
-								      <option value="Thứ 7">Thứ 7</option>
-								      <option value="Thứ 8">Chủ nhật</option>
-								    </select>
-								</div>
-								<div class="col-sm-0 col-md-2"></div>
-								<div class="form-group col-sm-3">
-								    <label for="endingDay">Ngày</label>
-								    <select class="form-control" id="endingDay" th:field=*{dayEndingOfWeek}>
-								      <option value="Thứ 2">Thứ 2</option>
-								      <option value="Thứ 3" >Thứ 3</option>
-								      <option value="Thứ 4">Thứ 4</option>
-								      <option value="Thứ 5">Thứ 5</option>
-								      <option value="Thứ 6" selected>Thứ 6</option>
-								      <option value="Thứ 7">Thứ 7</option>
-								      <option value="Chủ nhật">Chủ nhật</option>
-								    </select>
-								</div>
-								<div class="col-sm-0 col-md-2"></div>
-							</div>
-							<div class="form-group">
-							    <label for="description">Mô tả</label>
-							    <textarea class="form-control" id="description" rows="25" th:field=*{description}></textarea>
-							</div>
-							<div class="row">
-							<div class="col-md-4"></div>
-					        	<input type="submit" class="btn btn-success col-md-4 mb-5" value="Lưu"/>
-				        	</div>
-					      </form>
-					      
-					  </div>
-					</div>
-		        	
-		        </div>
-    
+
+    	<script>
+			const md = new SimpleMDE({ element: document.getElementById("description") });
+			md.togglePreview();
+			
+			const editInfo = () => {
+				document.getElementById("editInfoBtn").style.display = "none";
+				document.getElementById("submitBtn").style.display = "inline";
+				const inputElement = document.getElementsByClassName("input-element");
+				for(let i = 0; i < inputElement.length; i++) {
+					inputElement[i].disabled = false;
+				}
+				md.togglePreview();
+			}
+		</script>
 </div>
 </body>
 </html>

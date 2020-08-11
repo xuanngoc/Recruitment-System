@@ -80,13 +80,13 @@ public class EmployerController {
 		return "redirect:job";
 	}
 	
-	@PutMapping("job")
-	public String editJob(Authentication authentication, Job job) {
-		Employer employer = employerService.getEmployerByUsername(authentication.getName());
-		job.setEmployer(employer);
-		jobService.saveOrUpdate(job);
-		return "redirect:job";
-	}
+	/*
+	 * @PutMapping("job") public String editJob(Authentication authentication, Job
+	 * job) { Employer employer =
+	 * employerService.getEmployerByUsername(authentication.getName());
+	 * job.setEmployer(employer); jobService.saveOrUpdate(job); return
+	 * "redirect:job"; }
+	 */
 
 	@GetMapping("job/{id}")
 	public String detailJob(@PathVariable long id, Model model) {
