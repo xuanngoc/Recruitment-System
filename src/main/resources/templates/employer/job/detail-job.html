@@ -4,6 +4,8 @@
       layout:decorate="~{fragments/employer-layout}">
 <head>
     <title>EZ Jobs | Quản lý việc làm</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+	<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag" id="content">
@@ -23,7 +25,8 @@
 
         		<input type="hidden" th:field="*{jobId}"/>
 				<input type="hidden" th:field=*{employer} />
-				
+				<input type="hidden" th:field=*{posted_time} />
+								
 				<div class="form-group">
 					<label for="title">Tiêu đề công việc</label>
 				    <input type="text" class="form-control input" id="title" th:field="*{title}" disabled>
@@ -43,12 +46,11 @@
 			        	/>
 			        	<span class="mr-3"></span>
 					</th:block>
-					
-			        
+					       
 				</div>
 				<div class="form-group">
 					<label for="description">Mô tả</label>
-					<textarea class="form-control input" id="description" rows="25" th:field=*{description} disabled></textarea>
+					<textarea class="form-control input" id="description" rows="40" th:field=*{description} disabled></textarea>
 				</div>
 				<div class="row">
 				<div class="col-md-4"></div>
@@ -61,6 +63,9 @@
         
     </div>  
     <script type="text/javascript">
+	    const md = new SimpleMDE({ element: document.getElementById("description") });
+		md.togglePreview();
+		
 		const enableEditForm = () => {
 			document.getElementById("editBtn").style.display = "none";
 			document.getElementById("submitBtn").style.display = "inline";
@@ -68,6 +73,7 @@
 			for(let i = 0; i < listElementInput.length; i++) {
 				listElementInput[i].disabled = false;
 			}
+			md.togglePreview();
 		}
 	</script>  
 </div>
