@@ -36,7 +36,7 @@
 			      <td th:text="${employerRegister.title}"></td>
 			      <td th:text="${employerRegister.email}"></td>
 			      <td th:text="${employerRegister.phone}"></td>
-			      <td th:text="${employerRegister.getDateSentFormat()}"></td>
+			      <td th:text="${T(ezjob.util.DateUtil).getDateFormat(employerRegister.sentAt)}"></td>
 			      <td>
 			      	<form th:action="@{employer-register-request/} + ${employerRegister.employerRegisterId}" 
 			      			method="POST" 

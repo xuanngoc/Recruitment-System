@@ -1,6 +1,8 @@
 package ezjob.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,10 @@ public class EmployerService {
 	@Autowired
 	public void setUserRepository(UserRepository userRepository) {
 		this.userRepository = userRepository;
+	}
+	
+	public List<Employer> getAllEmployers() {
+		return employerRepository.findAll();
 	}
 	
 	public Employer getEmployerById(long id) throws Exception {

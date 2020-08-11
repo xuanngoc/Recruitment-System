@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import ezjob.model.SkillTag;
 import ezjob.service.EmployerRegisterService;
+import ezjob.service.EmployerService;
 import ezjob.service.SkillTagService;
 import ezjob.service.UserDetailServiceImp;
 
@@ -20,6 +21,8 @@ public class ManagementController {
 	private SkillTagService skillTagService;
 	private EmployerRegisterService employerRegisterService;
 	private UserDetailServiceImp userDetailServiceImp;
+	private EmployerService employerService;
+	
 	
 	@Autowired
 	public void setSkillTagService(SkillTagService skillTagService) {
@@ -34,6 +37,11 @@ public class ManagementController {
 	@Autowired
 	public void setUserDetailServiceImp(UserDetailServiceImp userDetailServiceImp) {
 		this.userDetailServiceImp = userDetailServiceImp;
+	}
+	
+	@Autowired
+	public void setEmployerService(EmployerService employerService) {
+		this.employerService = employerService;
 	}
 
 	@GetMapping
@@ -72,5 +80,10 @@ public class ManagementController {
 		return "redirect:/management/employer-register-request";
 	}
 	
+	@GetMapping("employer")
+	public String employerManagement(Model model) {
+		model.addAttribute("employers", employerService.getAllEmployers());
+		return "management/employer-management";
+	}
 	
 }

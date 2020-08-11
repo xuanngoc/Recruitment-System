@@ -13,14 +13,14 @@
         
         <div class="row mt-5">
         	<form class="col-md-4 offset-md-7" th:action="@{${job.jobId} + '/stop-recruit'}" method="POST" th:if="${!job.closed}">
-        		<input class="btn btn-info" type="submit" value="Dừng tuyển dụng" disable />
+        		<input class="btn btn-info" type="submit" value="Dừng tuyển dụng"  />
         	</form>
-        	<button class="col-sm-12 col-md-6 offset-md-3 btn btn-danger mt-5" th:if="${job.closed}">Đã dừng tuyển</button>
+        	<button class="col-sm-12 col-md-6 offset-md-3 btn btn-danger mt-5" th:if="${job.closed}" disabled>Đã dừng tuyển</button>
         </div>
         
         <div class="row">
         	<form id="job-form" class="col-sm-12 col-md-6 offset-md-3" th:action=@{/employer/job} method="POST" th:object="${job}" >
-        		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
         		<input type="hidden" th:field="*{jobId}"/>
 				<input type="hidden" th:field=*{employer} />
 				
