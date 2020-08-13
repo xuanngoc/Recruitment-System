@@ -40,4 +40,7 @@ public class JobService {
 		jobRepository.deleteById(id);
 	}
 	
+	public List<Job> searchByCityAndDescription(String city, String description) {
+		return jobRepository.findByCityAndDescription(city, description);
+	}
 }
