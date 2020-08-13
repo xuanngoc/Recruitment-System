@@ -50,4 +50,8 @@ public class EmployerService {
 	public long getEmployerIdByUsername(String username) {
 		return getEmployerByUsername(username).getEmployerId();
 	}
+	
+	public List<String> getTop9CompanyName() {
+		return employerRepository.findCompanyNameTop9ByTotalJobPosted();
+	}
 }
