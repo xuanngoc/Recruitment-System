@@ -89,7 +89,7 @@
     </div>
 
     	<script>
-			const md = new SimpleMDE({ element: document.getElementById("description") });
+			const md = new SimpleMDE({ element: document.getElementById("description"), spellChecker: false });
 			md.togglePreview();
 			
 			const editInfo = () => {
