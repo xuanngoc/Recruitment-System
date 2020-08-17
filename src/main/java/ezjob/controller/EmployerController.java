@@ -50,7 +50,7 @@ public class EmployerController {
 	 * employerService.getEmployerByUsername(authentication.getName()); }
 	 */
 	
-	@RequestMapping(path = {"", "info"})
+	@GetMapping(path = {"", "info"})
 	public String info(Authentication authentication, Model model) {
 		Employer employer = employerService.getEmployerByUsername(authentication.getName());
 		model.addAttribute("employer", employer);

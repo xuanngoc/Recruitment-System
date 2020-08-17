@@ -28,12 +28,16 @@
 				</div>
 				<div class="form-group">
 					<label for="salary">Kĩ năng</label>
-					<input type="checkbox" name="skilltags"
-			            th:each="skill : ${skillTags}"
-			            th:text="${skill.skillTagName}"
-			            th:value="${skill.skillTagId}"
-			            th:field="*{skillTags}"
-			        />
+					<div class="row">
+						<div class="col-4" th:each="skill : ${skillTags}">
+							<input class="mr-3" type="checkbox" name="skilltags" 
+				            th:text="${skill.skillTagName}"
+				            th:value="${skill.skillTagId}"
+				            th:field="*{skillTags}"
+				        	/>
+						</div>
+						
+				    </div>
 				</div>
 				<div class="form-group">
 					<label for="description">Mô tả</label>
