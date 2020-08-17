@@ -24,6 +24,11 @@ public class SkillTag {
 	private Collection<Job> jobs;
 
 	public SkillTag() {	}
+	
+	public SkillTag(Long skillTagId, String skillTagName) {
+		this.skillTagId = skillTagId;
+		this.skillTagName = skillTagName;
+	}
 
 	public Long getSkillTagId() {
 		return skillTagId;

@@ -15,18 +15,19 @@
 	                        </a>
 	                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 	                            <a class="dropdown-item" href="#">My profile</a>
-	                            <a class="dropdown-item" href="#">Setting</a>
 	                            <div class="dropdown-divider"></div>
-	                            <a class="dropdown-item"  href="/logout">Logout</a>  
+	                            <form class="dropdown-item" method="POST" th:action="@{/logout}">
+									<input type="submit" value="Đăng xuất" style="border: none; background: none; "/>
+								</form>  
 	                        </div> 
 	                    </li>
                     </ul>
                     <ul class="navbar-nav mr-5" sec:authorize="isAnonymous()">               	
                         <li class="nav-item mr-4">
-	                        <a th:href="employer-register" style="color: black">Đăng ký nhà tuyển dụng</a>
+	                        <a class="btn" th:href="employer-register" style="color: black">Đăng ký nhà tuyển dụng</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a th:href="login" style="color: black">Login</a>
+	                        <a class="btn" th:href="login" style="color: black">Login</a>
 	                    </li>
                     </ul>
                 </div>
