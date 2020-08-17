@@ -58,6 +58,14 @@ public class EmployerController {
 		return "redirect:info";
 	}
 	
+	/*
+	 * `@AuthenticationPrincipal User user` as a parameter in method instead of use
+	 * Authentication (User) authentication.getPrincipal()
+	 * You can also use 'java.security.Principal' to getName() then query name in User table to get User,
+	 * OR you can getAuthentication in method like variable 'Authentication authentication =
+ 			SecurityContextHolder.getContext().getAuthentication();'
+	 */
+	
 	@GetMapping("job")
 	public String jobManage(Authentication authentication, Model model) {
 		long employerId = employerService.getEmployerIdByUsername(authentication.getName());

@@ -8,5 +8,5 @@ import ezjob.model.EmployerRegister;
 
 public interface EmployerRegisterRepository extends JpaRepository<EmployerRegister, Long> {
 	
-	public List<EmployerRegister> findByPending(boolean isPending);
+	public List<EmployerRegister> findByPendingOrderBySentAtDesc(boolean isPending);
 }
