@@ -21,11 +21,11 @@
         </div>
         
         <div class="row">
-        	<form id="job-form" class="col-sm-12 col-md-6 offset-md-3" th:action=@{/employer/job} method="POST" th:object="${job}" >
+        	
+        	<form id="job-form" class="col-sm-12 col-md-6 offset-md-3" th:action=@{/employer/update-job} method="post" th:object="${job}" >
 
-        		<input type="hidden" th:field="*{jobId}"/>
-				<input type="hidden" th:field=*{employer} />
-								
+        		<input type="hidden" th:field="*{jobId}" />
+				
 				<div class="form-group">
 					<label for="title">Tiêu đề công việc</label>
 				    <input type="text" class="form-control input" id="title" th:field="*{title}" disabled required>
@@ -42,7 +42,6 @@
 				            th:value="${skill.skillTagId}"
 				            th:field="*{skillTags}"
 				            disabled
-				            required
 			        	/>
 			        	<span class="mr-3"></span>
 					</th:block>
@@ -55,7 +54,7 @@
 				<div class="row">
 				<div class="col-md-4"></div>
 					<input id="submitBtn" type="submit" class="btn btn-success col-md-4 mb-5" value="Lưu" style="display: none"/>
-					<button id="editBtn" type="button" class="btn btn-primary" onclick="enableEditForm()">Sửa thông tin</button>
+					<button id="editBtn" type="button" class="btn btn-primary col-md-4 mb-5" onclick="enableEditForm()">Sửa thông tin</button>
 				</div>			
 			</form>
 					
@@ -63,7 +62,7 @@
         
     </div>  
     <script type="text/javascript">
-	    const md = new SimpleMDE({ element: document.getElementById("description") });
+	    const md = new SimpleMDE({ element: document.getElementById("description"), spellChecker: false });
 		md.togglePreview();
 		
 		const enableEditForm = () => {

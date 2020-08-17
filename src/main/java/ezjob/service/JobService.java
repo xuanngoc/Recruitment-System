@@ -1,5 +1,6 @@
 package ezjob.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -40,7 +41,13 @@ public class JobService {
 		jobRepository.deleteById(id);
 	}
 	
+	public Date getPostedTimeByJobId(long id) {
+		return jobRepository.findById(id).get().getPostedTime();
+	}
+	
 	public List<Job> searchByCityAndDescription(String city, String description) {
 		return jobRepository.findByCityAndDescription(city, description);
 	}
+	
+	
 }

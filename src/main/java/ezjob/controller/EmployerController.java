@@ -1,5 +1,7 @@
 package ezjob.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ezjob.model.Employer;
 import ezjob.model.Job;
@@ -41,14 +44,16 @@ public class EmployerController {
 		this.skillTagService = skillTagService;
 	}
 	
-	@ModelAttribute("employer")
-	public Employer getEmployer(Authentication authentication){
-		System.out.println("run in model attribute");
-	    return employerService.getEmployerByUsername(authentication.getName());
-	}
+	/*
+	 * @ModelAttribute("employer") public Employer getEmployer(Authentication
+	 * authentication){ System.out.println("run in model attribute"); return
+	 * employerService.getEmployerByUsername(authentication.getName()); }
+	 */
 	
 	@RequestMapping(path = {"", "info"})
-	public String info() {
+	public String info(Authentication authentication, Model model) {
+		Employer employer = employerService.getEmployerByUsername(authentication.getName());
+		model.addAttribute("employer", employer);
 		return "employer/update-info";
 	}
 	
@@ -73,6 +78,14 @@ public class EmployerController {
 		return "employer/job/job";
 	}
 	
+	@GetMapping("job/{id}")
+	public String detailJob(@PathVariable long id, Model model) {
+		model.addAttribute("skillTags", skillTagService.getListSkillTags());
+		Job job = jobService.getJobById(id);
+		model.addAttribute("job", job);
+		return "employer/job/detail-job";
+	}
+	
 	@GetMapping("add-job")
 	public String addJob(Model model) {
 		model.addAttribute("job", new Job());
@@ -88,19 +101,14 @@ public class EmployerController {
 		return "redirect:job";
 	}
 	
-	/*
-	 * @PutMapping("job") public String editJob(Authentication authentication, Job
-	 * job) { Employer employer =
-	 * employerService.getEmployerByUsername(authentication.getName());
-	 * job.setEmployer(employer); jobService.saveOrUpdate(job); return
-	 * "redirect:job"; }
-	 */
-
-	@GetMapping("job/{id}")
-	public String detailJob(@PathVariable long id, Model model) {
-		model.addAttribute("skillTags", skillTagService.getListSkillTags());
-		model.addAttribute("job", jobService.getJobById(id));
-		return "employer/job/detail-job";
+	@PostMapping("update-job")
+	public String updateJob(Authentication authentication, Job job) {
+		Employer employer = employerService.getEmployerByUsername(authentication.getName());
+		job.setEmployer(employer);
+		Date postedTime = jobService.getPostedTimeByJobId(job.getJobId());
+		job.setPostedTime(postedTime);
+		jobService.saveOrUpdate(job);
+		return "redirect:job";
 	}
 	
 	@PostMapping("job/{id}/stop-recruit")
