@@ -10,11 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ezjob.config.ApplicationUserRole;
+import ezjob.model.Candidate;
 import ezjob.model.Employer;
 import ezjob.model.EmployerRegister;
 import ezjob.model.User;
 import ezjob.model.UserPrincipal;
-import ezjob.repository.EmployerRepository;
 import ezjob.repository.UserRepository;
 
 @Service
@@ -26,6 +26,13 @@ public class UserDetailServiceImp implements UserDetailsService {
 	private PasswordEncoder passwordEncoder;
 	
 	private EmployerService employerService;
+	
+	private CandidateService candidateService;
+	
+	@Autowired
+	public void setCandidateService(CandidateService candidateService) {
+		this.candidateService = candidateService;
+	}
 	
 	@Autowired
 	public void setUserRepository(UserRepository userRepository) {
@@ -51,6 +58,8 @@ public class UserDetailServiceImp implements UserDetailsService {
 		return new UserPrincipal(user, passwordEncoder);
 	}
 	
+	
+	
 	public void createEmployerUser(EmployerRegister employerRegister) {
 		User user = new User();
 		user.setUsername(employerRegister.getEmail());
@@ -67,4 +76,20 @@ public class UserDetailServiceImp implements UserDetailsService {
 		employerService.saveOrUpdate(employer);
 		
 	}
+	
+	public void createCandidateUser(User user) {
+		
+		user.setUsername(user.getEmail());
+		user.setRole(ApplicationUserRole.CANDIDATE.name());
+		
+		userRepository.save(user);
+		
+		Candidate candidate = new Candidate();
+		candidate.setUser(user);
+		candidateService.saveOrUpdate(candidate);
+		
+	}
+	
+	
+	
 }

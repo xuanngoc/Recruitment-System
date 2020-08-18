@@ -1,7 +1,7 @@
 package ezjob.config;
 
 public enum ApplicationUserRole {
-	USER,
+	CANDIDATE,
 	EMPLOYER,
 	MANAGER
 }

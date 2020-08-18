@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import ezjob.service.UserDetailServiceImp;
 
 @EnableWebSecurity
@@ -32,11 +33,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/", "/job/**", "/login", "/employer-register", "/js/**", "/img/**", "/css/**", "/webjars/**")
+				.antMatchers("/", "/job/**", "/login", "/user-register", "/employer-register", "/js/**", "/img/**", "/css/**", "/webjars/**")
 					.permitAll()
 				.antMatchers("/management/**").hasAuthority(ApplicationUserRole.MANAGER.name())
 				.antMatchers("/employer/**").hasAuthority(ApplicationUserRole.EMPLOYER.name())
-				.antMatchers("/authenticate/**").hasAuthority(ApplicationUserRole.USER.name())
+				.antMatchers("/authenticate/**").hasAuthority(ApplicationUserRole.CANDIDATE.name())
 					.anyRequest()
 					.authenticated()
 			.and()
@@ -59,5 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();
 	}
+	
+	
 
 }

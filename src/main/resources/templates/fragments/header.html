@@ -14,7 +14,8 @@
 	                            <span th:text ="${#authentication.getPrincipal().getUsername()}"></span>
 	                        </a>
 	                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	                            <a class="dropdown-item" href="#">My profile</a>
+	                            <a class="dropdown-item" th:href="@{candidate/candidate-info}">My profile</a>
+	                            <a class="dropdown-item" href="#">Setting</a>
 	                            <div class="dropdown-divider"></div>
 	                            <form class="dropdown-item" method="POST" th:action="@{/logout}">
 									<input type="submit" value="Đăng xuất" style="border: none; background: none; "/>
@@ -27,8 +28,8 @@
 	                        <a class="btn" th:href="employer-register" style="color: black">Đăng ký nhà tuyển dụng</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a class="btn" th:href="login" style="color: black">Login</a>
-	                    </li>
+	                        <a class="btn" th:href="login" style="color: black">Đăng nhập</a>
+	                    </li>	                    
                     </ul>
                 </div>
             </nav>

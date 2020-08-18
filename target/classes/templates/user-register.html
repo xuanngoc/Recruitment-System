@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/home-layout}">
+<head>
+    <title>EZ Jobs | Home</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+  	<link rel="stylesheet" href="https://static.pingendo.com/bootstrap/bootstrap-4.3.1.css">
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag" id="content">
+    	<h2 class="text-center" style="color: #30336b;"> Tạo tài khoản mới  </h2>
+    	 <div class="container" >
+      	<div class="row">
+       	 <div class="col-md-12">
+        	  <form class="" th:action="user-register" method="POST" th:object="${userRegister}" >
+        	    <div class="form-group"> <label>Địa chỉ Email</label> <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Enter email">  </div>
+             	   <div class="form-group"> <label>Mật khẩu</label> <input type="password" class="form-control" id="password"   th:field="*{password}" placeholder="Enter password"> 
+             	   	</div> <button type="submit" class="btn btn-primary">Đăng kí</button>
+        	  </form>
+     	  	 </div>
+    	  </div>
+    	</div>
+       
+		
+</div>
+
+	
+</body>
+</html>

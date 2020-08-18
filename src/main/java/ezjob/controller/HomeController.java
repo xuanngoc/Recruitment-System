@@ -3,7 +3,6 @@ package ezjob.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,16 +12,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ezjob.model.EmployerRegister;
 import ezjob.model.Job;
+import ezjob.model.User;
 import ezjob.service.EmployerRegisterService;
 import ezjob.service.EmployerService;
 import ezjob.service.JobService;
+import ezjob.service.UserDetailServiceImp;
+
 
 @Controller
 public class HomeController {
 	
 	private EmployerRegisterService employerRegisterService;
+	private UserDetailServiceImp userDetailService;
 	private EmployerService employerService;
 	private JobService jobService;
+	
+	@Autowired
+	public void setUserDetailService(UserDetailServiceImp userDetailService) {
+		this.userDetailService = userDetailService;
+	}
 	
 	@Autowired
 	public void setEmployerRegisterService(EmployerRegisterService employerRegisterService) {
@@ -46,10 +54,10 @@ public class HomeController {
 	}
 	
 	@GetMapping("/login")
-	public String login( ) {
-		return "login";
-	}
-	
+    public String login() {
+        return "login";
+    }
+		
 	@GetMapping("employer-register")
 	public String employerRegister(Model model) {
 		model.addAttribute("employerRegister", new EmployerRegister());
@@ -62,8 +70,23 @@ public class HomeController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("user-register")
+	public String userRegister(Model model) {
+		model.addAttribute("userRegister", new User());
+		return "user-register";
+			
+	}
+	
+	@PostMapping(path = "user-register")
+	public String saveUserRegister(User user) {
+		userDetailService.createCandidateUser(user);
+		return "redirect:/login";
+	}
+	
 	@GetMapping(value = "/", params = {"city", "searchText"})
-	public String searchJob(@RequestParam(required = false) String city, @RequestParam(required = false) String searchText, Model model) {
+	public String searchJob(@RequestParam(required = false) String city,
+			@RequestParam(required = false) String searchText,
+			Model model) {
 		List<Job> jobs = jobService.searchByCityAndDescription(city, searchText);
 		model.addAttribute("searchText", searchText);
 		model.addAttribute("jobs", jobs);
@@ -75,6 +98,5 @@ public class HomeController {
 		model.addAttribute("job", jobService.getJobById(id));
 		return "detail-job";
 	}
-
 	
 }
