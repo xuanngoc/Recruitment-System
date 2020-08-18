@@ -25,7 +25,7 @@
                         </select>
                     </div>
                     <div class="form-group col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                        <button class="btn btn-secondary form-item w-100 form-item" type="submit" style="background-color: #30336b">Tìm</button>
+                        <button class="btn btn-secondary form-item w-100 form-item" type="submit" style="background-color: #30336b"><i class="fas fa-search mr-2"></i>Tìm</button>
                     </div>
                 </form>
             </div>
@@ -39,13 +39,11 @@
 	        	<div class="row">
 	        		<div class="col-md-4 mb-5" th:each="companyName : ${companys}">
 	        			<div class="card w-100">
-						  <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-						  <div class="card-body">
-						    <p class="card-text text-center" th:text=${companyName}>Rikkeisoft</p>
-						  </div>
+						  <a class="card-body text-center" th:href="@{#}">
+						    <span th:text=${companyName}>Rikkeisoft</span>
+						  </a>
 						</div>
 	        		</div>
-	        		
 	        	</div>
         	</th:block>
         	<th:block th:if="${jobs != null}">
@@ -78,6 +76,7 @@
 	        	
         	</th:block>
         </div>
+        
 	</div>
 </div>
 </body>

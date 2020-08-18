@@ -44,9 +44,9 @@ public class ManagementController {
 		this.employerService = employerService;
 	}
 
-	@GetMapping
+	@GetMapping()
 	public String management() {
-		return "management/management";
+		return "redirect:employer-register-request";
 	}
 	
 	@GetMapping("skill-tag")
