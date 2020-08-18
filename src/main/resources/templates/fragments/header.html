@@ -5,17 +5,19 @@
 		<div class="row" >
             <nav class="col-12 navbar navbar-expand-lg position-fixed" id="horizontal-bar">
                 <a class="logo" href="/">EZ Jobs</a>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                	
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">                	
                     <span class="mr-auto"></span> 
+                    <a sec:authorize="hasAuthority('MANAGER')" class="btn" th:href="@{/management/}">Quản lý</a>
+                    <a sec:authorize="hasAuthority('EMPLOYER')" class="btn" th:href="@{/employer/}">Quản lý</a>
                     <ul class="navbar-nav mr-5" sec:authorize="isAuthenticated()">               	
                         <li class="nav-item dropdown">
+                        	
 	                        <a class="nav-link dropdown-toggle user-name" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                            <span th:text ="${#authentication.getPrincipal().getUsername()}"></span>
+	                            <i class="fas fa-user mr-1 ml-3"></i><span th:text ="${#authentication.getPrincipal().getUsername()}"></span>
 	                        </a>
 	                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	                            <a class="dropdown-item" th:href="@{candidate/candidate-info}">My profile</a>
-	                            <a class="dropdown-item" href="#">Setting</a>
+	                            <a sec:authorize="hasAuthority('CANDIDATE')" class="dropdown-item" th:href="@{candidate/candidate-info}">My profile</a>
+	                            
 	                            <div class="dropdown-divider"></div>
 	                            <form class="dropdown-item" method="POST" th:action="@{/logout}">
 									<input type="submit" value="Đăng xuất" style="border: none; background: none; "/>
