@@ -1,6 +1,8 @@
 package ezjob.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,10 @@ public class EmployerService {
 		this.userRepository = userRepository;
 	}
 	
+	public List<Employer> getAllEmployers() {
+		return employerRepository.findAll();
+	}
+	
 	public Employer getEmployerById(long id) throws Exception {
 		Employer employer = employerRepository.findById(id).get();
 		if (employer != null) {
@@ -41,4 +47,11 @@ public class EmployerService {
 		return employerRepository.findByUserId(userId);
 	}
 	
+	public long getEmployerIdByUsername(String username) {
+		return getEmployerByUsername(username).getEmployerId();
+	}
+	
+	public List<String> getTop9CompanyName() {
+		return employerRepository.findCompanyNameTop9ByTotalJobPosted();
+	}
 }

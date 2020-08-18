@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/employer-layout}">
+<head>
+    <title>EZ Jobs | Quản lý việc làm</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+	<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag" id="content">
+	<div class="col-sm-3 col-sm-3 col-sm-2 col-xl-2"></div>
+    <div class="col-sm-9 col-md-9 col-lg-10 col-xl-10" >
+    	<h2 class="text-center mt-2">Chi tiết thông tin việc làm</h2>
+        
+        <div class="row mt-5">
+        	<form class="col-md-4 offset-md-7" th:action="@{${job.jobId} + '/stop-recruit'}" method="POST" th:if="${!job.closed}">
+        		<input class="btn btn-info" type="submit" value="Dừng tuyển dụng"  />
+        	</form>
+        	<button class="col-sm-12 col-md-6 offset-md-3 btn btn-danger mt-5" th:if="${job.closed}" disabled>Đã dừng tuyển</button>
+        </div>
+        
+        <div class="row">
+        	
+        	<form id="job-form" class="col-sm-12 col-md-6 offset-md-3" th:action=@{/employer/update-job} method="post" th:object="${job}" >
+
+        		<input type="hidden" th:field="*{jobId}" />
+				
+				<div class="form-group">
+					<label for="title">Tiêu đề công việc</label>
+				    <input type="text" class="form-control input" id="title" th:field="*{title}" disabled required>
+				</div>
+				<div class="form-group">
+					<label for="salary">Mức lương</label>
+				    <input type="text" class="form-control input" id="salary" th:field=*{salary} disabled required>
+				</div>
+				<div class="form-group">
+					<label for="salary">Kĩ năng:</label> <br/>
+					<th:block th:each="skill : ${skillTags}">
+						<input type="checkbox" name="skilltags" class="input mr-2" th:checked="${#lists.contains(job.skillTags,''+ skill)}"
+				            th:text="${skill.skillTagName}"
+				            th:value="${skill.skillTagId}"
+				            th:field="*{skillTags}"
+				            disabled
+			        	/>
+			        	<span class="mr-3"></span>
+					</th:block>
+					       
+				</div>
+				<div class="form-group">
+					<label for="description">Mô tả</label>
+					<textarea class="form-control input" id="description" rows="40" th:field=*{description} disabled required></textarea>
+				</div>
+				<div class="row">
+				<div class="col-md-4"></div>
+					<input id="submitBtn" type="submit" class="btn btn-success col-md-4 mb-5" value="Lưu" style="display: none"/>
+					<button id="editBtn" type="button" class="btn btn-primary col-md-4 mb-5" onclick="enableEditForm()">Sửa thông tin</button>
+				</div>			
+			</form>
+					
+        </div>
+        
+    </div>  
+    <script type="text/javascript">
+	    const md = new SimpleMDE({ element: document.getElementById("description"), spellChecker: false });
+		md.togglePreview();
+		
+		const enableEditForm = () => {
+			document.getElementById("editBtn").style.display = "none";
+			document.getElementById("submitBtn").style.display = "inline";
+			const listElementInput = document.getElementsByClassName("input");
+			for(let i = 0; i < listElementInput.length; i++) {
+				listElementInput[i].disabled = false;
+			}
+			md.togglePreview();
+		}
+	</script>  
+</div>
+
+
+</body>
+</html>

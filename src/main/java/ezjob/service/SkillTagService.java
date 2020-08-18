@@ -22,8 +22,8 @@ public class SkillTagService {
 		return skillTagRepository.findById(id).get();	
 	}
 	
-	public void saveOrUpdate(SkillTag skillTag) {
-		skillTagRepository.save(skillTag);
+	public SkillTag saveOrUpdate(SkillTag skillTag) {
+		return skillTagRepository.save(skillTag);
 	}
 	
 	public void delete(long id) {

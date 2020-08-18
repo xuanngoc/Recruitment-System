@@ -1,10 +1,13 @@
 package ezjob.model;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class SkillTag {
@@ -16,8 +19,16 @@ public class SkillTag {
 	
 	@Column(name = "SKILL_TAG_NAME", length = 40)
 	private String skillTagName;
+	
+	@ManyToMany(mappedBy = "skillTags")
+	private Collection<Job> jobs;
 
 	public SkillTag() {	}
+	
+	public SkillTag(Long skillTagId, String skillTagName) {
+		this.skillTagId = skillTagId;
+		this.skillTagName = skillTagName;
+	}
 
 	public Long getSkillTagId() {
 		return skillTagId;

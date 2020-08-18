@@ -1,6 +1,7 @@
 package ezjob.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -52,6 +53,9 @@ public class Employer implements Serializable {
 	@Column(name = "DESCRIPTION", length = 2000)
 	private String description;
 
+	@OneToMany(mappedBy = "employer", cascade = CascadeType.ALL)
+	private Collection<Job> jobs;
+	
 	public Employer() { }
 
 	

@@ -4,18 +4,80 @@
       layout:decorate="~{fragments/home-layout}">
 <head>
     <title>EZ Jobs | Home</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
 </head>
 <body>
-<div layout:fragment="content" th:remove="tag" id="content">
-    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 offset-sm-0 offset-md-2 offset-lg-2 offset-xl-2" >
-    	<h2 class="text-center">Search bar here</h2>
-        repellendus numquam. Ipsum dolor, distinctio corrupti quia deserunt non adipisci pariatur doloru
-        m nemo veniam possimus. Cum, quod reiciendis aut, porro doloribus a ad deleniti dolores quos dolore temp
-        ora, nobis adipisci laborum et impedit tempore quaerat aperiam. Nam quo nisi nesciunt repellat ipsam offici
-        is, ea laboriosam? Tempora veritatis quidem impedit, voluptatibus repellat quo ducimus suscipit, officiis, in 
-        quod doloribus! Quas, assumenda.
-        
-		<img alt="favicon" th:src="@{/img/favicon.png}">
+<div layout:fragment="content" th:remove="tag" id="content" >
+    <div id="content">
+    	<div class="row bg-search" >
+            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2"></div>
+            <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                <form class="row form-inline align-items-center" action="/" id="form-search" method="GET">
+                    <div class="form-group col-sm-7 col-md-7 col-lg-7 col-xl-7">
+                        <input type="text" name="searchText" id="searchBar" class="form-control form-item  w-100" placeholder="Kỹ năng, công ty, công việc, .."  th:value="${searchText}">
+                    </div>
+                    <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                        <select class="custom-select form-item w-100" name="city" id="city">
+                            <option value="Hà Nội" selected>Hà Nội</option>
+                            <option value="Đà Nẵng">Đà Nẵng</option>
+                            <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                            <option value="Khác">Khác</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                        <button class="btn btn-secondary form-item w-100 form-item" type="submit" style="background-color: #30336b">Tìm</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2"></div>
+        </div>
+        <div class="container">
+        	<th:block th:if="${jobs == null}">
+	        	<div class="row mt-5 mb-4">
+	        		<h1 class="col-12 text-center">Top công ty hàng đầu trên EZ Jobs</h1> 
+	        	</div>
+	        	<div class="row">
+	        		<div class="col-md-4 mb-5" th:each="companyName : ${companys}">
+	        			<div class="card w-100">
+						  <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+						  <div class="card-body">
+						    <p class="card-text text-center" th:text=${companyName}>Rikkeisoft</p>
+						  </div>
+						</div>
+	        		</div>
+	        		
+	        	</div>
+        	</th:block>
+        	<th:block th:if="${jobs != null}">
+        		<div class="row">
+	        		<div class="col-sm-10 col-md-8 offset-sm-1 offset-md-2"  th:if="${!jobs.empty}">
+		        		<th:block th:each="job : ${jobs}">
+		        		<div class="card mt-3">
+						    <div class="card-body">
+							    <h4><a th:href="@{'job/' + ${job.jobId}}" th:text="${job.title}"></a></h4>
+							    <h6 class="text-secondary" th:text="'$ ' + ${job.salary}"></h6>
+							    <p class="card-text" th:text="${job.description}" 
+							    	style="overflow: hidden; text-overflow: ellipsis; height: 70px">
+							    </p>
+							    
+							    <span class="badge badge-info mr-2" th:each="skill : ${job.skillTags}" th:text="${skill.skillTagName}"></span>
+						  		
+						  		<div class="row mt-3">
+						  			<span class="text-warning col-md-6" 
+						  				th:text="${'Ngày đăng: ' + T(ezjob.util.DateUtil).getDateFormat(job.postedTime)}"></span>
+						  			<span class="text-danger col-md-6 text-right" th:if="${job.closed == true}">Đã ngừng</span>
+						  		</div>
+						  		
+						  		
+						  	</div>
+						</div>
+						</th:block>
+		        	</div>
+		        	<div class="col-12 text-center" th:if="${jobs.empty}">Không có kết quả</div>
+		        </div>
+	        	
+        	</th:block>
+        </div>
 	</div>
 </div>
 </body>

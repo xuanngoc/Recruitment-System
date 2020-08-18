@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/employer-layout}">
+<head>
+    <title>EZ Jobs | Quản lý việc làm</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag" id="content">
+	<div class="col-sm-3 col-sm-3 col-sm-2 col-xl-2"></div>
+    <div class="col-sm-9 col-md-9 col-lg-10 col-xl-10" >
+    	<h2 class="text-center mt-2">Quản lý thông tin việc làm</h2>
+        
+        
+        <div class="row mt-5">
+        	<div class="col-md-4 offset-md-8">
+        		<a class="btn btn-primary" href="add-job">Đăng tin tuyển dụng</a>
+        	</div>
+        </div>
+        <div class="row ">
+        	<div class="row">
+        	
+	        	<div class="col-sm-10 col-md-8 offset-sm-1 offset-md-2"  th:if="${!jobs.empty}">
+	        		
+	        		<th:block th:each="job : ${jobs}">
+	        		<div class="card mt-3">
+					    <div class="card-body">
+						    <h4><a th:href="@{'job/' + ${job.jobId}}" th:text="${job.title}"></a></h4>
+						    <h6 class="text-secondary" th:text="'$ ' + ${job.salary}"></h6>
+						    <p class="card-text" th:text="${job.description}" 
+						    	style="overflow: hidden; text-overflow: ellipsis; height: 70px">
+						    </p>
+						    
+						    <span class="badge badge-info mr-2" th:each="skill : ${job.skillTags}" th:text="${skill.skillTagName}"></span>
+					  		
+					  		<div class="row mt-3">
+					  			<span class="text-warning col-md-6" 
+					  				th:text="${'Ngày đăng: ' + T(ezjob.util.DateUtil).getDateFormat(job.postedTime)}"></span>
+					  			<span class="text-danger col-md-6 text-right" th:if="${job.closed == true}">Đã ngừng</span>
+					  		</div>
+					  		
+					  		
+					  	</div>
+					</div>
+					</th:block>
+	        	</div>
+        	</div>
+        	
+        </div>
+        
+    </div>    
+</div>
+</body>
+</html>

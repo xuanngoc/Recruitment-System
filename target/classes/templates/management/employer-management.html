@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>EZ Jobs | Quản lý</title>
+    <script type="text/javascript" th:src="@{/js/employer-register-request.js}" ></script>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag" id="content">
+    <div class="col-sm-9 col-md-9 col-lg-10 col-xl-10 offset-sm-3 offset-md-3 offset-lg-2 offset-xl-2" >
+    	<h2 class="text-center">Danh sách nhà tuyển dụng</h2>
+        <div class="row mt-5">
+        	<table class="table col-sm-12 col-md-8 offset-md-2">
+			  <thead>
+			    <tr>
+			      <th scope="col">STT</th>
+			      <th scope="col">Tên công ty</th>
+			      <th scope="col">Thành phố</th>
+			      <th scope="col">Email</th>
+			      <th scope="col">Số điện thoại</th>  
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr th:each="employer, index : ${employers}">
+			   	  <th scope="row" th:text="${index.count}"></th>
+			      <th scope="row" th:text="${employer.companyName}"></th>
+			      <td th:text="${employer.city}"></td>
+			      <td th:text="${employer.user.email}"></td>
+			      <td th:text="${employer.user.phone}"></td>
+			      
+			      <!-- <td>
+			      	<form th:action="@{employer/} + ${employer.employerId}" method="POST" >
+			      		<button class="btn btn-success" type="submit"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+			      	</form>
+			      </td> -->
+			    </tr>
+			  </tbody>
+			</table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

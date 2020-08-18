@@ -4,7 +4,7 @@
 <th:block th:fragment="header">
 		<div class="row" >
             <nav class="col-12 navbar navbar-expand-lg position-fixed" id="horizontal-bar">
-                <span class="logo">EZ Jobs</span>
+                <a class="logo" href="/">EZ Jobs</a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 	
                     <span class="mr-auto"></span> 
@@ -17,22 +17,19 @@
 	                            <a class="dropdown-item" th:href="@{candidate/candidate-info}">My profile</a>
 	                            <a class="dropdown-item" href="#">Setting</a>
 	                            <div class="dropdown-divider"></div>
-	                            <a class="dropdown-item"  href="/logout">Logout</a>  
+	                            <form class="dropdown-item" method="POST" th:action="@{/logout}">
+									<input type="submit" value="Đăng xuất" style="border: none; background: none; "/>
+								</form>  
 	                        </div> 
 	                    </li>
                     </ul>
                     <ul class="navbar-nav mr-5" sec:authorize="isAnonymous()">               	
-                        <li class="nav-item mr-3">
-	                        <a th:href="employer-register" style="color: black">Đăng kí nhà tuyển dụng</a>
+                        <li class="nav-item mr-4">
+	                        <a class="btn" th:href="employer-register" style="color: black">Đăng ký nhà tuyển dụng</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a th:href="login" style="color: black">Đăng nhập</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a th:href="user-register" style="color: black">Đăng kí</a>
-	                    </li>
-	                    
-	                    
+	                        <a class="btn" th:href="login" style="color: black">Đăng nhập</a>
+	                    </li>	                    
                     </ul>
                 </div>
             </nav>

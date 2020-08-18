@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import ezjob.model.SkillTag;
 import ezjob.service.EmployerRegisterService;
+import ezjob.service.EmployerService;
 import ezjob.service.SkillTagService;
 import ezjob.service.UserDetailServiceImp;
 
@@ -20,6 +21,8 @@ public class ManagementController {
 	private SkillTagService skillTagService;
 	private EmployerRegisterService employerRegisterService;
 	private UserDetailServiceImp userDetailServiceImp;
+	private EmployerService employerService;
+	
 	
 	@Autowired
 	public void setSkillTagService(SkillTagService skillTagService) {
@@ -34,6 +37,11 @@ public class ManagementController {
 	@Autowired
 	public void setUserDetailServiceImp(UserDetailServiceImp userDetailServiceImp) {
 		this.userDetailServiceImp = userDetailServiceImp;
+	}
+	
+	@Autowired
+	public void setEmployerService(EmployerService employerService) {
+		this.employerService = employerService;
 	}
 
 	@GetMapping
@@ -54,6 +62,24 @@ public class ManagementController {
 		return "redirect:skill-tag";
 	}
 	
+	@GetMapping("skill-tag/{id}/edit")
+	public String editSkillTag(@PathVariable long id, Model model) {
+		model.addAttribute("skill", skillTagService.getSkillTagById(id));
+		return "management/skill-tag/edit-skill-tag";
+	}
+	
+	@PostMapping("skill-tag/{id}/update")
+	public String updateSkillTag(@PathVariable long id, SkillTag skillTag) {
+		skillTagService.saveOrUpdate(skillTag);
+		return "redirect:/management/skill-tag";
+	}
+	
+	@PostMapping("skill-tag/{id}/delete")
+	public String deleteSkillTag(@PathVariable long id, SkillTag skillTag) {
+		skillTagService.delete(id);
+		return "redirect:/management/skill-tag";
+	}
+	
 	@GetMapping("employer-register-request")
 	public String employerRegisterRequest(Model model) {
 		model.addAttribute("employerRegisterRequests", employerRegisterService.getAllEmployerRegistersPending());
@@ -72,5 +98,10 @@ public class ManagementController {
 		return "redirect:/management/employer-register-request";
 	}
 	
+	@GetMapping("employer")
+	public String employerManagement(Model model) {
+		model.addAttribute("employers", employerService.getAllEmployers());
+		return "management/employer-management";
+	}
 	
 }

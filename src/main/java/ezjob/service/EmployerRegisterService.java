@@ -26,7 +26,7 @@ public class EmployerRegisterService {
 	}
 	
 	public List<EmployerRegister> getAllEmployerRegistersPending() {
-		return employerRegisterRepository.findByPending(true);
+		return employerRegisterRepository.findByPendingOrderBySentAtDesc(true);
 	}
 	
 	public EmployerRegister getEmployerRegisterById(long id) {
