@@ -7,7 +7,7 @@
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag" id="content">
-    	<h2 class="text-center" style="color: #30336b;">Đăng ký làm nhà tuyển dụng</h2>
+    	<h2 class="text-center" style="color: #30336b;">Đăng kí làm nhà tuyển dụng</h2>
     	
         <div class="row">
         	<div class="col-sm-2 col-4"></div>
@@ -23,14 +23,14 @@
 			  <div class="form-group">
 			    <label for="city">Thành phố</label>
 			    <select class="form-control" id="city" th:field="*{city}">
-			      <option value="Hà Nội">Hà nội</option>
-			      <option value="Đà Nẵng">Đà Nắng</option>
-			      <option value="Hồ Chí Minh">Hồ Chí Minh</option>
-			      <option value="Others">Others</option>
+			      <option value="Hà Nội">Hà Nội</option>
+			      <option value="Đà Nẵng">Đà Nẵng</option>
+			      <option value="TP.Hồ Chí Minh">Tp.Hồ Chí Minh</option>
+			      <option value="Others">Khác</option>
 			    </select>
 			  </div>
 			  <div class="form-group">
-			    <label for="fullname">Tên đầy đủ</label>
+			    <label for="fullname">Họ và tên</label>
 			    <input type="text" class="form-control" id="fullname" th:field="*{fullname}">
 			  </div>
 			  <div class="form-group">
@@ -42,13 +42,13 @@
 			    <input type="email" class="form-control" id="email" th:field=*{email}>
 			  </div>
 			  <div class="form-group">
-			    <label for="phone">Số điện thoại</label>
+			    <label for="phone">Số điện thọai</label>
 			    <input type="text" class="form-control" id="phone" th:field=*{phone}>
 			  </div>
 			  <button type="submit" class="btn btn-primary">Gửi</button>
 			  <hr>
 			  <p class="text-danger mt-3">
-			  	Chú ý: Chúng tôi sẽ chỉ chấp nhận yêu cầu với thông tin trên là đầy đủ và chính xác. 
+			  	Chúng tôi chỉ chấp nhận những yêu cầu có thông tin đầy đủ và chính xác
 			  </p>
 			  
 			</form>

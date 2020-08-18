@@ -2,14 +2,13 @@ package ezjob.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import ezjob.service.UserDetailServiceImp;
 
@@ -24,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/", "/login", "/employer-register", "/js/**", "/img/**", "/css/**", "/webjars/**").permitAll()
+				.antMatchers("/", "/login", "/employer-register","/user-register","/candidate-info", "/js/**", "/img/**", "/css/**", "/webjars/**").permitAll()
 				.antMatchers("/management/**").hasAuthority("MANAGER")
 				.antMatchers("/employer/**").hasAuthority("EMPLOYER").anyRequest().authenticated()
 			.and()
@@ -46,5 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();
 	}
+	
+	
 
 }
