@@ -31,7 +31,7 @@ import ezjob.service.CandidateService;
 @RequestMapping("/candidate/")
 public class CandidateController {
 	
-	private final String UPLOAD_DIR = "Assets\\";
+	private final String UPLOAD_DIR = "Assets\\cv\\";
 
 	private CandidateService candidateService;
 	

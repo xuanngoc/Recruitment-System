@@ -1,15 +1,36 @@
 package ezjob.controller;
 
-import java.util.Date;
+import static org.hamcrest.CoreMatchers.nullValue;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.persistence.Id;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import ezjob.model.Employer;
 import ezjob.model.Job;
@@ -21,10 +42,11 @@ import ezjob.service.SkillTagService;
 @RequestMapping("/employer/")
 public class EmployerController {
 	
+	private static final String UPLOAD_DIR = "Assets\\image\\";
 	private EmployerService employerService;
 	private JobService jobService;
 	private SkillTagService skillTagService;
-	
+	private InputStream in;
 	@Autowired
 	public void setEmployerService(EmployerService employerService) {
 		this.employerService = employerService;
@@ -48,7 +70,21 @@ public class EmployerController {
 	}
 	
 	@PostMapping("/info")
-	public String updateInfo(Employer employer) {
+	public String updateInfo(@RequestParam(name = "path_file_image" , required = false) MultipartFile file, Employer employer) throws IOException {
+		if (file != null) {
+			System.out.println(file);
+			String fileName = UPLOAD_DIR + employer.getEmployerId() + ".png";
+			in.close();
+	        try {
+	            Path path = Paths.get(fileName);
+	            
+	            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+	            employer.setPathFileImage(fileName);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		}
+		
 		employerService.saveOrUpdate(employer);
 		return "redirect:info";
 	}
@@ -108,6 +144,21 @@ public class EmployerController {
 		jobService.saveOrUpdate(job);
 		
 		return "redirect:/employer/job";
+	}
+	
+	@GetMapping(
+			  value = "/{id}/image",
+			  produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE}
+	)
+	public @ResponseBody byte[] getImageWithMediaType(@PathVariable long id) throws IOException, InterruptedException {
+		
+		try {
+			in = new FileInputStream("Assets\\image\\" + id + ".png");
+		} catch(FileNotFoundException excpt) {  
+            Logger.getGlobal().log(Level.WARNING, "\nUsing default image");
+            in = new FileInputStream("Assets\\image\\default.png");
+        }		
+	    return IOUtils.toByteArray(in);
 	}
 	
  }

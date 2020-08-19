@@ -52,6 +52,9 @@ public class Employer implements Serializable {
 	
 	@Column(name = "DESCRIPTION", length = 2000)
 	private String description;
+	
+	@Column(name = "PATH_FILE_IMAGE", length = 350)
+	private String pathFileImage = "Assets\\image\\default.png";
 
 	@OneToMany(mappedBy = "employer", cascade = CascadeType.ALL)
 	private Collection<Job> jobs;
@@ -145,6 +148,14 @@ public class Employer implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getPathFileImage() {
+		return pathFileImage;
+	}
+
+	public void setPathFileImage(String pathFileImage) {
+		this.pathFileImage = pathFileImage;
 	}
 	
 }
