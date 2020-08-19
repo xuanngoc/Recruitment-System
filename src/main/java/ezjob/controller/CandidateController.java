@@ -1,6 +1,7 @@
 package ezjob.controller;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,6 +46,10 @@ public class CandidateController {
 		String name = authentication.getName();
 	    Candidate candidate = candidateService.getCandidateByUserName(name);
 		model.addAttribute("candidate", candidate); 
+		String fileName = candidate.getPath_file_cv();
+		if(fileName != null) {
+			model.addAttribute("filename", fileName.substring(7));
+		}
 		return "candidate/candidate-info";
 	}
 	
@@ -53,14 +58,13 @@ public class CandidateController {
 			RedirectAttributes attributes,
 			@RequestParam("fullname") String fullname,
 			@RequestParam("candidateId") long id ) {
-
+		
         if (file.isEmpty()) {
            attributes.addFlashAttribute("message", "Please select a file to upload");
             return  "redirect:candidate-info";
         }
         
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-
         try {
             Path path = Paths.get(UPLOAD_DIR + fileName);
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
