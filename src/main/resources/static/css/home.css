@@ -1,5 +1,4 @@
 #content {
-	margin-top: 50px;
 	background-color: #f5f6fa;
 }
 
@@ -19,4 +18,16 @@
 
 select {
 	text-align-last:center; 
+}
+
+a {
+    color: #0060B6;
+    text-decoration: none;
+}
+
+a:hover 
+{
+     color:#00A0C6; 
+     text-decoration:none; 
+     cursor:pointer;  
 }
