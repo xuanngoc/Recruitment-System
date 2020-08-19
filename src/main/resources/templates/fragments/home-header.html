@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<body>
+<th:block th:fragment="header">
+		
+		<div class="vw-100" id="horizontal-bar" >
+			<div class="container">
+				<div class="row">
+					<div class="col-3">
+						<a class="logo mb-2" href="/">EZ Jobs</a>
+					</div>
+					<div class="col-9">
+						<div class="row justify-content-end">
+							
+							<div class="col-9">
+								<div class="row justify-content-end align-items-center mr-2" sec:authorize="isAuthenticated()" style="height: 60px;">               	
+									<a sec:authorize="hasAuthority('MANAGER')" class="pt-3 pb-3 " th:href="@{/management/}">Quản lý</a>
+									<a sec:authorize="hasAuthority('EMPLOYER')" class="pt-3 pb-3" th:href="@{/employer/}">Quản lý</a>
+				                    
+				                    <a class="dropdown-toggle user-name pt-3 pb-3 ml-3"  href="#" id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				                        <i class="fas fa-user mr-1 ml-3"></i><span th:text ="${#authentication.getPrincipal().getUsername()}"></span>
+				                    </a>
+				                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #ecf0f1">
+				                        <a sec:authorize="hasAuthority('CANDIDATE')" class="dropdown-item" th:href="@{candidate/candidate-info}">My profile</a>
+				                        <div class="dropdown-divider"></div>
+				                        <form class="dropdown-item" method="POST" th:action="@{/logout}">
+											<input type="submit" value="Đăng xuất" style="border: none; background: none; "/>
+										</form>  
+				                    </div> 
+			                    </div>
+			                    
+			                    <div class="row justify-content-end align-items-center mr-2" sec:authorize="isAnonymous()"  style="height: 60px;">               	
+				                    <a class="pt-3 pb-3" th:href="employer-register" style="color: black">Đăng ký nhà tuyển dụng</a>
+				                    <a class="pt-3 pb-3 ml-4" th:href="login" style="color: black">Đăng nhập</a>
+			                    </div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+</th:block>
+</body>
+</html>

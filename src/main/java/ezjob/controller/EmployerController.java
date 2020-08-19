@@ -40,13 +40,7 @@ public class EmployerController {
 		this.skillTagService = skillTagService;
 	}
 	
-	/*
-	 * @ModelAttribute("employer") public Employer getEmployer(Authentication
-	 * authentication){ System.out.println("run in model attribute"); return
-	 * employerService.getEmployerByUsername(authentication.getName()); }
-	 */
-	
-	@GetMapping(path = {"", "info"})
+	@GetMapping(path = {"info"})
 	public String info(Authentication authentication, Model model) {
 		Employer employer = employerService.getEmployerByUsername(authentication.getName());
 		model.addAttribute("employer", employer);
@@ -67,7 +61,7 @@ public class EmployerController {
  			SecurityContextHolder.getContext().getAuthentication();'
 	 */
 	
-	@GetMapping("job")
+	@GetMapping(path = {"" ,"job"})
 	public String jobManage(Authentication authentication, Model model) {
 		long employerId = employerService.getEmployerIdByUsername(authentication.getName());
 		model.addAttribute("jobs", jobService.getJobsByEmployerId(employerId));
