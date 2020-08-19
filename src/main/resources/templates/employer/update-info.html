@@ -15,7 +15,7 @@
         
         <div class="row mt-5">
         	<div class="col-sm-2 col-md-3"></div>
-        	<form class="col-sm-8 col-md-6" th:action=@{info} method="POST" th:object="${employer}">
+        	<form class="col-sm-8 col-md-6" th:action=@{info} method="POST" th:object="${employer}" enctype="multipart/form-data">
         		<input type="hidden" th:field="*{employerId}" />
         		<input type="hidden" th:field="*{user}" />
         		
@@ -43,10 +43,11 @@
 				    <label for="address ">Địa chỉ</label>
 				    <input type="text" class="form-control input-element" id="address" th:field=*{address} disabled>
 				</div>
+				<label for="day ">Ngày làm việc</label>
 				<div class="row">
 					<div class="col-sm-0 col-md-2"></div>
 					<div class="form-group col-sm-3">
-					    <label for="companyName">Ngày</label>
+					    <label for="companyName">Từ</label>
 					    <select class="form-control input-element" id="startingDay" th:field=*{dayStartingOfWeek} disabled>
 					      <option value="Thứ 2"selected>Thứ 2</option>
 					      <option value="Thứ 3" >Thứ 3</option>
@@ -59,7 +60,7 @@
 					</div>
 					<div class="col-sm-0 col-md-2"></div>
 					<div class="form-group col-sm-3">
-					    <label for="endingDay">Ngày</label>
+					    <label for="endingDay">Đến</label>
 					    <select class="form-control input-element" id="endingDay" th:field=*{dayEndingOfWeek} disabled>
 					      <option value="Thứ 2">Thứ 2</option>
 					      <option value="Thứ 3" >Thứ 3</option>
@@ -73,15 +74,22 @@
 					<div class="col-sm-0 col-md-2"></div>
 				</div>
 				<div class="form-group">
+				    <label>Ảnh đại diện</label><br>
+				    <input id="path_file_image" class="input-element" style="display:none" type="file" name="path_file_image" accept="image/jpeg, image/png" onchange="readURL(this)" disabled>
+				    <label class="btn btn-info ml-5 mr-5" id="changeImage" for="path_file_image" style="display: none">Thay đổi ảnh</label>   
+				    <img id="showImg" th:src="'/employer/' + *{employerId} + '/image'" width="200" height="200" alt="no image selected" />
+				</div>				
+				
+				<div class="form-group">
 				    <label for="description">Mô tả</label>
 				    <textarea class="form-control input-element" id="description" rows="25" th:field=*{description} disabled></textarea>
 				</div>
 				<div class="row">
 					<div class="col-md-4"></div>
-		        	<button class="btn btn-success col-md-4 mb-5" id="editInfoBtn" type="button" onclick="editInfo()">
+		        	<button class="btn btn-primary col-md-4 mb-5" id="editInfoBtn" type="button" onclick="editInfo()">
 		        		Sửa thông tin công ty
 		        	</button>
-		        	<button class="btn btn-success col-md-4 mb-5 input-element" id="submitBtn" type="submit" style="display: none;">
+		        	<button class="btn btn-primary col-md-4 mb-5 input-element" id="submitBtn" type="submit" style="display: none;">
 		        		Lưu thông tin
 		        	</button>
 		        	
@@ -98,12 +106,28 @@
 			const editInfo = () => {
 				document.getElementById("editInfoBtn").style.display = "none";
 				document.getElementById("submitBtn").style.display = "inline";
+				document.getElementById("changeImage").style.display = "inline";
 				const inputElement = document.getElementsByClassName("input-element");
 				for(let i = 0; i < inputElement.length; i++) {
 					inputElement[i].disabled = false;
 				}
 				md.togglePreview();
 			}
+			
+		     function readURL(input) {
+		            if (input.files && input.files[0]) {
+		                var reader = new FileReader();
+						console.log(input);
+		                reader.onload = function (e) {
+		                    $('#showImg')
+		                        .attr('src', e.target.result)
+		                        .width(250)
+		                        .height(250);
+		                };
+
+		                reader.readAsDataURL(input.files[0]);
+		            }
+		     }
 		</script>
 </div>
 </body>
