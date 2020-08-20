@@ -47,6 +47,7 @@ public class EmployerController {
 	private JobService jobService;
 	private SkillTagService skillTagService;
 	private InputStream in;
+	
 	@Autowired
 	public void setEmployerService(EmployerService employerService) {
 		this.employerService = employerService;

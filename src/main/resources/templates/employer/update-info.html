@@ -76,7 +76,7 @@
 				<div class="form-group">
 				    <label>Ảnh đại diện</label><br>
 				    <input id="path_file_image" class="input-element" style="display:none" type="file" name="path_file_image" accept="image/jpeg, image/png" onchange="readURL(this)" disabled>
-				    <label class="btn btn-info ml-5 mr-5" id="changeImage" for="path_file_image" style="display: none">Thay đổi ảnh</label>   
+				    <label class="btn btn-info ml-5 mr-5" id="changeImage" for="path_file_image" style="visibility: hidden;">Thay đổi ảnh</label>   
 				    <img id="showImg" th:src="'/employer/' + *{employerId} + '/image'" width="200" height="200" alt="no image selected" />
 				</div>				
 				
@@ -106,7 +106,7 @@
 			const editInfo = () => {
 				document.getElementById("editInfoBtn").style.display = "none";
 				document.getElementById("submitBtn").style.display = "inline";
-				document.getElementById("changeImage").style.display = "inline";
+				document.getElementById("changeImage").style.visibility = "visible";
 				const inputElement = document.getElementsByClassName("input-element");
 				for(let i = 0; i < inputElement.length; i++) {
 					inputElement[i].disabled = false;

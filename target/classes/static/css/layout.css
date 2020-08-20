@@ -3,7 +3,7 @@ body {
 }
 
 .logo {
-	font-family: 'Rowdies', cursive;
+	
     color: #0069D9;
     font-size: 45px;
 }
@@ -13,9 +13,9 @@ body {
 }
 
 #horizontal-bar {
-    background-color: #ecf0f1;
+    background-color: white;
     z-index: 2;
-    height: 60px;
+    height: 80px;
 }
 
 #side-bar {

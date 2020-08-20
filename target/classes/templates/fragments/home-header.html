@@ -3,7 +3,7 @@
 <body>
 <th:block th:fragment="header">
 		
-		<div class="vw-100" id="horizontal-bar" >
+		<div class="vw-100" id="horizontal-bar">
 			<div class="container">
 				<div class="row">
 					<div class="col-3">
@@ -13,7 +13,7 @@
 						<div class="row justify-content-end">
 							
 							<div class="col-9">
-								<div class="row justify-content-end align-items-center mr-2" sec:authorize="isAuthenticated()" style="height: 60px;">               	
+								<div class="row justify-content-end align-items-center mr-2" sec:authorize="isAuthenticated()" style="height: 80px;">               	
 									<a sec:authorize="hasAuthority('MANAGER')" class="pt-3 pb-3 " th:href="@{/management/}">Quản lý</a>
 									<a sec:authorize="hasAuthority('EMPLOYER')" class="pt-3 pb-3" th:href="@{/employer/}">Quản lý</a>
 				                    
@@ -21,7 +21,7 @@
 				                        <i class="fas fa-user mr-1 ml-3"></i><span th:text ="${#authentication.getPrincipal().getUsername()}"></span>
 				                    </a>
 				                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #ecf0f1">
-				                        <a sec:authorize="hasAuthority('CANDIDATE')" class="dropdown-item" th:href="@{candidate/candidate-info}">My profile</a>
+				                        <a sec:authorize="hasAuthority('CANDIDATE')" class="dropdown-item" th:href="@{candidate/candidate-info}">Thông tin</a>
 				                        <div class="dropdown-divider"></div>
 				                        <form class="dropdown-item" method="POST" th:action="@{/logout}">
 											<input type="submit" value="Đăng xuất" style="border: none; background: none; "/>
@@ -29,7 +29,7 @@
 				                    </div> 
 			                    </div>
 			                    
-			                    <div class="row justify-content-end align-items-center mr-2" sec:authorize="isAnonymous()"  style="height: 60px;">               	
+			                    <div class="row justify-content-end align-items-center mr-2" sec:authorize="isAnonymous()"  style="height: 80px;">               	
 				                    <a class="pt-3 pb-3" th:href="employer-register" style="color: black">Đăng ký nhà tuyển dụng</a>
 				                    <a class="pt-3 pb-3 ml-4" th:href="login" style="color: black">Đăng nhập</a>
 			                    </div>
