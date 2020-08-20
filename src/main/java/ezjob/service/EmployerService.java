@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ezjob.model.Employer;
+import ezjob.model.dto.CompanyDTO;
+import ezjob.model.dto.IComapnyDTO;
 import ezjob.repository.EmployerRepository;
 import ezjob.repository.UserRepository;
 
@@ -51,7 +53,7 @@ public class EmployerService {
 		return getEmployerByUsername(username).getEmployerId();
 	}
 	
-	public List<String> getTop9CompanyName() {
+	public List<Object> getTop9CompanyName() {
 		return employerRepository.findCompanyNameTop9ByTotalJobPosted();
 	}
 }
