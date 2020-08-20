@@ -52,6 +52,8 @@ public class Job {
 			 joinColumns = @JoinColumn(name = "job_id"),
 			 inverseJoinColumns = @JoinColumn(name = "skill_tag_id"))
 	private Collection<SkillTag> skillTags;
+	
+	
 
 	
 	public Job() {}
