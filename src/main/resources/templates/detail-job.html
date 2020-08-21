@@ -3,14 +3,14 @@
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/home-layout}">
 <head>
-    <title>EZ Jobs | Home</title>
+    <title>EZ Jobs | Chi tiết công việc</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag" id="content">
-	<div class="container" style="margin-top: 50px">
-    	<div class="row mt-5">
-    		<div class="col-3 bg-info" id="company" th:object=${job.employer}>
+	<div class="container ">
+    	<div class="row">
+    		<div class="col-3 bg-info pt-5 pb-5" id="company" th:object=${job.employer}>
     			<h2 class="text-center mb-5 mt-3" th:text="${T(ezjob.util.StringUtil).getCompanyName(job.employer.companyName)}"></h2>
     			<i class="fa fa-cog mr-2 mb-2" aria-hidden="true"></i><span th:text="*{type}"></span> <br>
     			<i class="fa fa-globe mr-2 mb-2" aria-hidden="true"></i><span th:text="*{city} + ' - ' + *{country}"></span> <br>
@@ -20,12 +20,12 @@
     		
     		<div class="col-9 wh-100 pt-5" id="job-detail" th:object="${job}" style="background-color: #9AECDB">
     			<h4 class="text-center" th:text="${job.title}" style="font-size: 27px; color: #6D214F;"></h4>
-    			<div class="ml-3 mt-5">
-    				<i class="fa fa-cogs text-primary mr-3" aria-hidden="true"></i>
+    			<div class="ml-3 mt-5 ml-5">
+    				<i class="ml-3 fa fa-cogs text-primary mr-3" aria-hidden="true"></i>
     				<span class="badge badge-info mr-2" th:each="skill : *{skillTags}" th:text="${skill.skillTagName}"></span>
     			</div>
-    			<div class="ml-3 mt-2">
-    				<i class="fa fa-map-marker text-primary mr-2" aria-hidden="true"></i>
+    			<div class="ml-3 mt-2 ml-5">
+    				<i class="ml-3 fa fa-map-marker text-primary mr-2" aria-hidden="true"></i>
     				<span th:text="*{employer.address}"></span>
     			</div>
     			<div class="row  mt-3">

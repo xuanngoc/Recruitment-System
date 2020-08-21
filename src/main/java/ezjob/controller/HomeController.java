@@ -102,7 +102,12 @@ public class HomeController {
 	@PostMapping(path = "employer-register")
 	public String sendEmployerRegister(EmployerRegister employerRegister) {
 		employerRegisterService.saveOrUpdate(employerRegister);
-		return "redirect:/";
+		return "redirect:/send-employer-register-request-success";
+	}
+	
+	@GetMapping("/send-employer-register-request-success")
+	public String employerRegisterRequestSuccess() {
+		return "send-employer-register-request-success";
 	}
 	
 	@GetMapping("user-register")
@@ -137,60 +142,51 @@ public class HomeController {
 	}
 	
 	@GetMapping(path= "job/{id}/apply" )
-	public String info( @PathVariable long id,Model model,Authentication authentication)  {
+	public String info(@PathVariable long id, Model model, Authentication authentication)  {
 		model.addAttribute("title", jobService.getJobById(id).getTitle());
-		if(authentication!=null) {
+		if(authentication != null) {
 			String name = authentication.getName();
 		    Candidate candidate = candidateService.getCandidateByUserName(name);
-			model.addAttribute("fullname", candidate.getFullname()); 
-			model.addAttribute("path_file_cv", candidate.getPath_file_cv().toString()); 
 			String fileName = candidate.getPath_file_cv();
-			if(fileName != null) {
-				model.addAttribute("filename", fileName.substring(7));
+			if (fileName != null) {
+				model.addAttribute("path_file_cv", fileName);
 			}
 		}
 			
-		 return "apply";
+		return "apply";
 	}
 	
 	@PostMapping(path = "job/{id}/apply")
-	public String sendCV(@PathVariable long id,Authentication authentication,
-			@RequestParam("path_file_cv") MultipartFile file ,Model model) {
+	public String sendCV(@PathVariable long id, Authentication authentication,
+			@RequestParam(name = "path_file_cv", required = false) MultipartFile file, Model model) {
 	
 		ApplyingCV applyingCV = new ApplyingCV();
-		if(authentication == null) {
-			if (file.isEmpty()) {
-				model.addAttribute("message",  "Please select a file ");
-			    return  "redirect:job/{id}/apply";
-			}
-			String fileName = UUID.randomUUID().toString()+".pdf";
+		// user authenticated and get file from user profile
+		if (file.isEmpty()) {
+			String path = candidateService.getCandidateByUserName(authentication.getName()).getPath_file_cv();
+			applyingCV.setPath_file_cv(path);
+		} else {
+			// if file is selected specify one
 			try {
+				String fileName = UUID.randomUUID().toString() + ".pdf";
 				Path path = Paths.get(UPLOAD_DIR + fileName);
-			    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-			    applyingCV.setPath_file_cv(path.toString());        
-			} catch (IOException e) {
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				applyingCV.setPath_file_cv(path.toString());
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			model.addAttribute("message",  "Successfully uploaded " + fileName + '!');   
-		
-		}
-		else {
-			String name = authentication.getName();
-			Candidate candidate = candidateService.getCandidateByUserName(name);
-			applyingCV.setPath_file_cv(candidate.getPath_file_cv().toString());
-			
 		}
 		
-	    Job job=jobService.getJobById(id);
+	    Job job = jobService.getJobById(id);
 		applyingCV.setJob(job);
 	    long millis = System.currentTimeMillis();  
 		java.sql.Date date = new java.sql.Date(millis);  
 		applyingCV.setDatetime(date);
 		applyingService.saveOrUpdate(applyingCV);
-		return "home";
+		return "redirect:/sendCVSuccess";
 	}
 	
-	@GetMapping("job/{id}/sendCVsuccess")
+	@GetMapping("/sendCVSuccess")
 	public String success() {
 		return "sendCVsuccess";	
 	}

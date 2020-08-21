@@ -11,28 +11,41 @@
 <body>
 <div layout:fragment="content" th:remove="tag" id="content">
 	<div class="bg-light vh-100">
-    	<h2 class="text-center" style="color: #30336b; margin-top:55px" >Táº¡o tÃ i khoáº£n má»›i </h2>
-    	 <div class="container" >
-      	 <div class="row">
-       	 <div class="col-4"></div>
-       	 <div class="col-4">
-        	  <form class="" th:action="user-register" method="POST" th:object="${userRegister}" >
-        	    <div class="form-group">
-        	     <label>Ä�á»‹a chá»‰ Email</label>
-        	      <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Enter email">  </div>
-             	<div class="form-group">
-             		<label>Máº­t kháº©u</label>
-             		<input type="password" class="form-control" id="password"   th:field="*{password}" placeholder="Enter password"> 
-             	</div>
-				 <div class="row">
-				 		<div class="col-4"></div>
-				 		<button type="submit" class="btn btn-primary col-4">Ä�Äƒng kÃ­</button> 
-				 </div>
-				 
-        	  </form>
-     	  	 </div>
-    	  </div>
-    	</div>
+
+    	<div class="row h-100 align-items-center mb-5">
+ 			<div class="col-4"></div>
+ 			<div class="col-4">
+	 			
+				<div class="row p-5 bg-white rounded">
+					<div class="col-12">
+						<form th:action="user-register" method="POST" th:object="${userRegister}">
+							<h3 class="text-center">Đăng nhập</h3>
+							<div class="form-group">
+							    <label for="email">Địa chỉ email: </label>
+							    <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Enter email">
+							</div>
+							<div class="form-group">
+							    <label for="password">Mật khẩu: </label>
+							    <input type="password" class="form-control" id="password"   th:field="*{password}" placeholder="Enter password">
+							</div>
+							
+							<div class="row mt-4">
+								<div class="col-2"></div>
+								<input type="submit" class="col-8 btn btn-primary text-center" value="Đăng ký">
+							</div> 
+							
+					 	</form>
+					 	<div class="row">
+							<div th:if="${param.error}">
+								Unable to login. Check your username and password.
+							</div>		
+		 				</div>
+					 	
+					 </div>
+				</div>
+				
+			</div>
+		</div>
        
 	</div>
 </div>
