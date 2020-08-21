@@ -40,7 +40,7 @@ public class Job {
 	@Column(name = "CLOSED")
 	private boolean closed = false;
 	
-	@Column(name = "DESCRIPTION", length = 1000)
+	@Column(name = "DESCRIPTION", length = 5000)
 	private String description;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

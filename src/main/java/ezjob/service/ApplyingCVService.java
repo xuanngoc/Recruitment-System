@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ezjob.model.ApplyingCV;
+import ezjob.model.Job;
 import ezjob.repository.ApplyingCVRepository;
 
 @Service
@@ -17,12 +18,7 @@ public class ApplyingCVService {
 	}
 	
 	public void saveOrUpdate(ApplyingCV cv) {
-		
-		
-	cv.setDatetime(cv.getDatetime());
-	cv.setJob(cv.getJob());
-	appyingCVRepository.save(cv);
-		
+		appyingCVRepository.save(cv);
 	}
 	
 }

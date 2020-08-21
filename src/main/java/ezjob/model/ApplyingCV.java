@@ -20,7 +20,7 @@ public class ApplyingCV {
 	private long cvId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "COMPANY_ID",nullable =  false)
+    @JoinColumn(name = "JOB_ID",nullable =  false)
     private Job job;
 	
 	private String  path_file_cv;
