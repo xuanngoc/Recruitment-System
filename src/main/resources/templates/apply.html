@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/home-layout}">
+<head>
+    <title>EZ Jobs | ApplyCV </title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag" id="content">
+		<div class="bg-light vh-100">
+    	<div class="container" >
+      	<div class="row">
+      	<div class="col-3"></div>
+       	 <div class="col-6">
+        	  <form class="" th:action=@{apply} method="POST"  enctype="multipart/form-data" >
+        
+        	 
+        	  <h2 class="text-center" style="color: #30336b; margin-top:55px" th:text="${title}">  </h2>  
+        				  
+             	<div class="form-group"> 
+             		<label>Họ và tên</label> <input type="text" class="form-control" id="fullname"  th:placeholder="${fullname}" > </div>
+             	   
+             	<div class="form-group" >
+             		<label>CV: </label>   <span th:text="${filename}"> </span> 
+    			     <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>  		  
+             		 <input type="file" class="form-control-file" accept=".pdf"  name="path_file_cv" onchange="showUp()" id="file" th:text="${path_file_cv}"  style="display: none;" > 
+             		 <label id="selectFile" class="btn btn-primary" for="file">Đổi file</label>
+             	</div> 	 
+             	
+				 <a class="col-8 offset-2" th:href="@{sendCVsuccess}" type="button" >
+    					<span class="btn btn-danger w-100"> Gửi hồ sơ ứng tuyển </span>
+    				</a>  	 
+        	  </form>
+        	 
+     	  	 </div>
+     	  	 <script type="text/javascript">
+     	  	 	if(document.getElementById('file').files.length == 0) {
+     	  	 		document.getElementById('selectFile').innerHTML = 'Chọn CV';
+     	  	 	} else {
+     	  	 		document.getElementById('file').style.display = 'inline';
+     	  	 	}
+     	  	 	
+     	  	 	const showUp = () => {
+     	  	 		document.getElementById('file').style.display = 'inline';
+     	  	 		document.getElementById('selectFile').innerHTML = 'Chọn lại CV';
+     	  	 	}
+     	  	 </script>
+    	  </div>
+    	</div>
+       	</div>
+</div>
+
+
+
+</body>
+</html>

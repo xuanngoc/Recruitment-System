@@ -1,14 +1,11 @@
 package ezjob.service;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ezjob.model.Employer;
-import ezjob.model.dto.CompanyDTO;
-import ezjob.model.dto.IComapnyDTO;
 import ezjob.repository.EmployerRepository;
 import ezjob.repository.UserRepository;
 
@@ -56,4 +53,5 @@ public class EmployerService {
 	public List<Object> getTop9CompanyName() {
 		return employerRepository.findCompanyNameTop9ByTotalJobPosted();
 	}
+	
 }

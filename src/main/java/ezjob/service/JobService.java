@@ -29,9 +29,13 @@ public class JobService {
 		throw new EntityNotFoundException("Job with " + id + " not found");
 	}
 	
+	
+	
+	
 	public List<Job> getJobsByEmployerId(long employerId) {
 		return jobRepository.findJobByEmployerEmployerId(employerId);
 	}
+	
 	
 	public void saveOrUpdate(Job job) {
 		jobRepository.save(job);
@@ -50,4 +54,6 @@ public class JobService {
 	}
 	
 	
+	
+
 }
