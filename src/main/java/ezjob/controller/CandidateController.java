@@ -31,7 +31,7 @@ import ezjob.service.CandidateService;
 @RequestMapping("/candidate/")
 public class CandidateController {
 	
-	private final String UPLOAD_DIR = "Assets\\";
+	private final String UPLOAD_DIR = "Assets\\cv\\";
 
 	private CandidateService candidateService;
 	
@@ -63,6 +63,7 @@ public class CandidateController {
             return  "redirect:candidate-info";
         }
         String fileName = UUID.randomUUID().toString()+".pdf";
+
         try {
             Path path = Paths.get(UPLOAD_DIR + fileName);
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);

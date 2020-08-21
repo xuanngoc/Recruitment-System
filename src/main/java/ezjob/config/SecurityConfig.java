@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/", "/job/**", "/login", "/user-register", "/employer-register", "/js/**", "/img/**", "/css/**", "/webjars/**")
+				.antMatchers("/", "/image/**", "/job/**", "/login", "/user-register", "/employer-register", "/js/**", "/img/**", "/css/**", "/webjars/**")
 					.permitAll()
 				.antMatchers("/management/**").hasAuthority(ApplicationUserRole.MANAGER.name())
 				.antMatchers("/employer/**").hasAuthority(ApplicationUserRole.EMPLOYER.name())

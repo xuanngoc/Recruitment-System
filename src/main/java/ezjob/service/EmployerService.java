@@ -1,6 +1,5 @@
 package ezjob.service;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +50,8 @@ public class EmployerService {
 		return getEmployerByUsername(username).getEmployerId();
 	}
 	
-	public List<String> getTop9CompanyName() {
+	public List<Object> getTop9CompanyName() {
 		return employerRepository.findCompanyNameTop9ByTotalJobPosted();
 	}
+	
 }

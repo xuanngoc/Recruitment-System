@@ -11,23 +11,22 @@
 <body>
 <div layout:fragment="content" th:remove="tag" id="content">
 	<div class="bg-light vh-100">
-    	<h2 class="text-center" style="color: #30336b; margin-top:55px" >Tạo tài khoản mới </h2>
+    	<h2 class="text-center" style="color: #30336b; margin-top:55px" >Táº¡o tÃ i khoáº£n má»›i </h2>
     	 <div class="container" >
       	 <div class="row">
        	 <div class="col-4"></div>
        	 <div class="col-4">
         	  <form class="" th:action="user-register" method="POST" th:object="${userRegister}" >
         	    <div class="form-group">
-        	     <label>Địa chỉ Email</label>
+        	     <label>Ä�á»‹a chá»‰ Email</label>
         	      <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Enter email">  </div>
              	<div class="form-group">
-             		<label>Mật khẩu</label>
+             		<label>Máº­t kháº©u</label>
              		<input type="password" class="form-control" id="password"   th:field="*{password}" placeholder="Enter password"> 
              	</div>
 				 <div class="row">
-				 
 				 		<div class="col-4"></div>
-				 		<button type="submit" class="btn btn-primary col-4">Đăng kí</button> 
+				 		<button type="submit" class="btn btn-primary col-4">Ä�Äƒng kÃ­</button> 
 				 </div>
 				 
         	  </form>

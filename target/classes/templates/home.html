@@ -25,7 +25,7 @@
 	                        </select>
 	                    </div>
 	                    <div class="form-group col-sm-2 col-md-2 col-lg-2 col-xl-2">
-	                        <button class="btn btn-secondary form-item w-100 form-item" type="submit" style="background-color: #30336b"><i class="fas fa-search mr-2"></i></button>
+	                        <button class="btn btn-secondary bg-light form-item w-100 form-item" type="submit"><i class="fas text-dark fa-search mr-2"></i></button>
 	                    </div>
 	                </form>
 	            </div>
@@ -37,11 +37,20 @@
 	        		<h1 class="col-12 text-center">Top công ty hàng đầu trên EZ Jobs</h1> 
 	        	</div>
 	        	<div class="row">
-	        		<div class="col-md-4 mb-5" th:each="companyName : ${companys}">
-	        			<div class="card w-100">
-						  <a class="card-body text-center" th:href="@{#}">
-						    <span th:text=${companyName}>Rikkeisoft</span>
-						  </a>
+	        		<div class="col-md-4 mb-5" th:each="company : ${companys}">
+	        			<div class="card w-100 pt-4">
+	        				<div class="row justify-content-center">
+	        					<img class="text-center" th:src="@{'/image/'} + ${company[0]}" width="150" height="150">
+	        				</div>
+	        				
+							<a class="card-body text-center" th:href="@{#}">
+								<span th:text=${company[1]} style="font-size: 20px;">Rikkeisoft</span>
+							</a>
+							
+							<div class="row justify-content-center">
+								<p class="text-danger" th:text="${company[2] + ' công việc đang tuyển dụng'}"  style="font-size: 15px;"></p>
+							</div>
+							
 						</div>
 	        		</div>
 	        	</div>
