@@ -7,9 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import ezjob.model.Employer;
-import ezjob.model.dto.CompanyDTO;
-import ezjob.model.dto.IComapnyDTO;
-
 public interface EmployerRepository extends JpaRepository<Employer, Long> {
 
 	@Query(value = "select * from employer where user_id = ?", nativeQuery = true)

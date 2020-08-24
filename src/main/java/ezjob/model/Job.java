@@ -54,7 +54,6 @@ public class Job {
 	private Collection<SkillTag> skillTags;
 	
 	
-
 	
 	public Job() {}
 

@@ -5,15 +5,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.ContentTypeOptionsConfig;
 import org.springframework.security.core.Authentication;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -23,6 +31,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.util.ContentTypeUtils;
+
+import ch.qos.logback.core.util.ContentTypeUtil;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ezjob.model.ApplyingCV;
@@ -147,18 +159,28 @@ public class HomeController {
 		if(authentication != null) {
 			String name = authentication.getName();
 		    Candidate candidate = candidateService.getCandidateByUserName(name);
-			String fileName = candidate.getPath_file_cv();
-			if (fileName != null) {
-				model.addAttribute("path_file_cv", fileName);
-			}
+			/*
+			 * String fileName = candidate.getPath_file_cv(); if (fileName != null) {
+			 * model.addAttribute("path_file_cv", fileName); }
+			 * model.addAttribute("fullname", candidate.getF)
+			 */
+		    
+		    model.addAttribute("candidate", candidate);
+		    
 		}
 			
 		return "apply";
 	}
 	
 	@PostMapping(path = "job/{id}/apply")
-	public String sendCV(@PathVariable long id, Authentication authentication,
-			@RequestParam(name = "path_file_cv", required = false) MultipartFile file, Model model) {
+	public String sendCV(
+			Authentication authentication,
+			@PathVariable long id,
+			@RequestParam(name = "path_file_cv", required = false) MultipartFile file,
+			@RequestParam String fullname,
+			@RequestParam String phoneNumber,
+			@RequestParam String address
+			) {
 	
 		ApplyingCV applyingCV = new ApplyingCV();
 		// user authenticated and get file from user profile
@@ -179,9 +201,9 @@ public class HomeController {
 		
 	    Job job = jobService.getJobById(id);
 		applyingCV.setJob(job);
-	    long millis = System.currentTimeMillis();  
-		java.sql.Date date = new java.sql.Date(millis);  
-		applyingCV.setDatetime(date);
+		applyingCV.setFullname(fullname);
+		applyingCV.setPhoneNumber(phoneNumber);
+		applyingCV.setAddress(address);
 		applyingService.saveOrUpdate(applyingCV);
 		return "redirect:/sendCVSuccess";
 	}
@@ -204,6 +226,17 @@ public class HomeController {
           in = new FileInputStream("Assets\\image\\default.png");
 		}		
 	    return IOUtils.toByteArray(in);
+	}
+	
+	@GetMapping("/cv/{id}")
+	public void showCV(@PathVariable long id, HttpServletResponse response) throws IOException {
+		response.setContentType("application/pdf");
+		String pathFile = applyingService.getPathFileCVById(id);
+		InputStream inputStream = new FileInputStream(new File(pathFile));
+        int nRead;
+        while ((nRead = inputStream.read()) != -1) {
+            response.getWriter().write(nRead);
+        }
 	}
 	
 }
