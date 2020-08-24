@@ -8,48 +8,85 @@
 <body>
 <div layout:fragment="content" th:remove="tag" id="content">
 		<div class="bg-light vh-100">
-    	<div class="container" >
+    	<div class="container " style="background-color: #7ed6df" >
       	<div class="row">
       	<div class="col-3"></div>
        	 <div class="col-6">
-        	  <form class="" th:action=@{apply} method="POST"  enctype="multipart/form-data" onsubmit="return onCheckValidation()">
-        	  	<h2 class="text-center" style="color: #30336b; margin-top:55px" th:text="${title}">  </h2>  		  
-             	<div class="form-group mt-5" >
+        	  <form class="mb-5" th:action=@{apply} method="POST"  enctype="multipart/form-data" onsubmit="return onCheckValidation()">
+        	  	<h2 class="text-center" style="color: #30336b; margin-top:55px" th:text="${title}">  </h2>  	
+        	  	<th:block sec:authorize="isAuthenticated()">
+	        	  	<div class="form-group">
+					    <label for="fullname">Họ tên<span class="ml-2 text-danger">*</span> </label>
+					    <input type="text" class="form-control" id="fullname" name="fullname" required th:field="${candidate.fullname}">
+					</div>
+					<div class="form-group">
+					    <label for="phoneNumber">Số điện thoại<span class="ml-2 text-danger">*</span> </label>
+					    <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" required >
+					</div>
+					<div class="form-group">
+					    <label for="address">Địa chỉ<span class="ml-2 text-danger">*</span> </label>
+					    <input type="text" class="form-control" id="address" name="address" required>
+					</div>    
+				</th:block>  
+				<th:block sec:authorize="isAnonymous()">
+	        	  	<div class="form-group">
+					    <label for="fullname">Họ tên<span class="ml-2 text-danger">*</span> </label>
+					    <input type="text" class="form-control" id="fullname" name="fullname" required>
+					</div>
+					<div class="form-group">
+					    <label for="phoneNumber">Số điện thoại<span class="ml-2 text-danger">*</span> </label>
+					    <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" required>
+					</div>
+					<div class="form-group">
+					    <label for="address">Địa chỉ<span class="ml-2 text-danger">*</span> </label>
+					    <input type="text" class="form-control" id="address" name="address" required>
+					</div>    
+				</th:block>    	  		  
+             	<div class="form-group" >
              	
     			     <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p> 
     			     <div sec:authorize="isAuthenticated()">
-    			     	<label>CV của bạn:</label>
-    			     	<span id="authenticated" class="ml-3 text-success" th:text="${path_file_cv}"></span>
-    			     	<a class="btn btn-info" target="_blank" th:href="@{#}">Xem CV</a>
+    			     	<div id="isAuthentication">
+	    			     	<label>CV hiện có của bạn:</label>
+	    			     	<span id="authenticated" class="ml-3 text-success" th:text="${path_file_cv}"></span>
+	    			     	<a class="btn btn-info" target="_blank" th:href="@{'/candidate/candidate-info/view?path_file_cv=' + ${T(ezjob.util.InvalidUrlUtil).parsePathFileToValidUrl(candidate.path_file_cv)} + ''}">Xem CV</a>
+	    			     </div>
     			     	<br>
-    			     	<input type="file" class="form-control-file mt-5" accept=".pdf" name="path_file_cv" 
+    			     	<input type="file" class="form-control-file" accept=".pdf" name="path_file_cv" 
              		 		onchange="showUp()" id="file" th:value="${path_file_cv}" style="display: none;" > 
-             		 	<label id="selectFile" class="btn btn-primary mt-5" for="file">Chọn lại CV</label>
+             		 	
+             		 	<span class="mr-3" id="file-name" style="display: none;"></span>
+             		 	<label id="selectFile" class="btn btn-primary mt-2" for="file">Chọn lại CV</label>
     			     </div>
-    			     <div sec:authorize="isAnonymous()">
-    			     	<input type="file" class="form-control-file mt-5" accept=".pdf" name="path_file_cv" 
-             		 		onchange="showUp()" id="file1" th:value="${path_file_cv}" style="display: none;" > 
-             		 	<label id="selectFile" class="btn btn-primary mt-5" for="file1">Chọn CV</label>
+    			     <div sec:authorize="isAnonymous()" class="mb-5">
+    			     	<input type="file" class="form-control-file" accept=".pdf" name="path_file_cv" 
+             		 		onchange="showUp1()" id="file1" th:value="${path_file_cv}" style="display: none;" > 
+             		 	<span class="mr-3" id="file1-name" style="display: none;"></span> 
+             		 	<label id="selectFile" class="btn btn-primary mt-2" for="file1">Chọn CV</label>
     			     </div>
     			      		  
              		 
              	</div> 	 
-				<input class="col-8 offset-2 btn btn-primary" th:href="@{sendCVsuccess}" type="submit" value="Gửi yêu cầu ứng tuyển" >
+				<input class="col-8 offset-2 btn btn-primary mt-3 mb-5" th:href="@{sendCVsuccess}" type="submit" value="Gửi yêu cầu ứng tuyển" >
         	  </form>
         	 
      	  	 </div>
      	  	 <script type="text/javascript">
+	     	  	const showUp1 = () => {
+	 	  	 		document.getElementById('file1-name').style.display = 'inline';
+	 	  	 		const fileName = document.getElementById('file1');
+	 	  	 		document.getElementById('file1-name').innerHTML = `Tên file: ${fileName.files[0].name}`;
+	 	  	 		document.getElementById('selectFile').innerHTML = 'Chọn lại CV';
+	 	  	 		
+	 	  	 	}
+	     	  	
 	     	  	const showUp = () => {
-	 	  	 		document.getElementById('file').style.display = 'inline';
-	 	  	 		document.getElementById('file1').style.display = 'inline';
+	     	  		document.getElementById('isAuthentication').style.display = 'none';
+	 	  	 		document.getElementById('file-name').style.display = 'inline';
+		 	  	 	const fileName = document.getElementById('file');
+	 	  	 		document.getElementById('file-name').innerHTML = `Tên file: ${fileName.files[0].name}`;
 	 	  	 	}
      	  	 
-     	  	 	if(document.getElementById('file1').files.length == 0) {
-     	  	 		document.getElementById('selectFile').innerHTML = 'Chọn CV';
-     	  	 	} else {
-     	  	 		document.getElementById('file1').style.display = 'inline';
-     	  	 	}
-     	  	 	
      	  	 	const onCheckValidation = ()  => {
      	  	 		if (document.getElementById('file1').files.length == 0) {
      	  	 			alert("Bắt buộc chọn file CV trước khi gửi.");

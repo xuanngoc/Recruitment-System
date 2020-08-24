@@ -25,7 +25,8 @@
 					      <th scope="col">STT</th>
 					      <th scope="col">Tiêu đề công việc</th>
 					      <th scope="col">Ngày đăng</th>
-					      <th scope="col">Chi tiết</th>
+					      <th scope="col">Ứng viên</th>
+					      <th scope="col">Chi tiết thông tin</th>
 					    </tr>
 					  </thead>
 					  <tbody>
@@ -35,11 +36,8 @@
 					      <td th:text="${''+ T(ezjob.util.DateUtil).getDateFormat(job.postedTime)}">
 					      	<span class="text-danger col-md-6 text-right" th:if="${job.closed == true}"> - Đã ngừng</span>
 					      </td>
-					      <!-- <td>
-					      	<span class="text-danger col-md-6 text-right" th:if="${job.closed == false}">sss</span>
-					  		<span class="text-danger col-md-6 text-right" th:if="${job.closed == true}">Đã ngừng</span>
-					      </td> -->
-					      <td><a class="btn btn-primary" th:href="@{'job/' + ${job.jobId}}" >Chi tiết</a> </td>
+					      <td><a class="btn btn-primary" th:href="@{'job/' + ${job.jobId} + '/candidates'}" >Xem chi tiết</a> </td>
+					      <td><a class="btn btn-primary" th:href="@{'job/' + ${job.jobId}}" >Xem thông tin công việc</a> </td>
 					    </tr>
 					  </tbody>
 					</table>
