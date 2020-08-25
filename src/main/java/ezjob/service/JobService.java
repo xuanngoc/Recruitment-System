@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ezjob.model.Job;
@@ -32,10 +34,15 @@ public class JobService {
 	
 	
 	
-	public List<Job> getJobsByEmployerId(long employerId) {
-		return jobRepository.findJobByEmployerEmployerId(employerId);
+	public Page<Job> getJobsByEmployerId(long employerId, Pageable pageable) {
+		//Page<Job> pages = jobRepository.findAll(pageable);
+		/* pages.getTotalPages(); */
+		return jobRepository.findJobByEmployerId(employerId, pageable);
 	}
 	
+	public Page<Job> getJobByTitleContainning(Long id, String title, Pageable pageable) {
+		return jobRepository.findByEmployerIdAndTitleContaining(id, title, pageable);
+	}
 	
 	public void saveOrUpdate(Job job) {
 		jobRepository.save(job);

@@ -17,7 +17,7 @@
         	<form class="col-md-4 offset-md-7" th:action="@{${job.jobId} + '/stop-recruit'}" method="POST" th:if="${!job.closed}">
         		<input class="btn btn-info" type="submit" value="Dừng tuyển dụng"  />
         	</form>
-        	<button class="col-sm-12 col-md-6 offset-md-3 btn btn-danger mt-5" th:if="${job.closed}" disabled>Đã dừng tuyển</button>
+        	<button class="col-sm-12 col-md-6 offset-md-3 btn btn-danger mt-5 mb-5" th:if="${job.closed}" disabled style="height: 70px; font-size: 25px">Đã dừng tuyển</button>
         </div>
         
         <div class="row">
@@ -54,7 +54,7 @@
 				<div class="row">
 				<div class="col-md-4"></div>
 					<input id="submitBtn" type="submit" class="btn btn-success col-md-4 mb-5" value="Lưu" style="display: none"/>
-					<button id="editBtn" type="button" class="btn btn-primary col-md-4 mb-5" onclick="enableEditForm()">Sửa thông tin</button>
+					<button id="editBtn" type="button" class="btn btn-primary col-md-4 mb-5" onclick="enableEditForm()" th:unless="${job.closed}">Sửa thông tin</button>
 				</div>			
 			</form>
 					

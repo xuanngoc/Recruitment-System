@@ -10,7 +10,19 @@
 	<div class="col-sm-3 col-sm-3 col-sm-2 col-xl-2"></div>
     <div class="col-sm-9 col-md-9 col-lg-10 col-xl-10" >
     	<h2 class="text-center mt-5">Danh sách CV ứng tuyển</h2>
-              
+        
+        <div class="row mt-5">
+        	<div class="col-2"></div>
+        	<form class="row form-inline col-8 align-items-center" th:action="@{'/employer/job/' + ${jobId} + '/candidates' }" method="get">
+        		<div class="form-group col-sm-9 col-md-9 col-lg-9 col-xl-9">
+	            	<input type="text" name="q" id="searchBar" class="form-control form-item  w-100" placeholder="Tên ứng viên"  th:value="${param.q}">
+	            </div>
+	            <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+	                <button class="btn btn-secondary bg-light form-item w-100 form-item" type="submit"><i class="fas text-dark fa-search mr-2"></i></button>
+	            </div>
+        	</form>
+        </div>
+        
         <div class="row mt-4">
 	        	<div class="col-sm-10 col-md-8 offset-sm-1 offset-md-2"  th:if="${!listCVs.empty}">
 	        		<table class="table">
@@ -36,6 +48,21 @@
 					    </tr>
 					  </tbody>
 					</table>
+					<div class="row justify-content-center" th:if="${listCVs.totalPages > 0}">
+						<nav aria-label="...">
+						  <ul class="pagination" >
+						  	<th:block th:each="pageNumber : ${pageNumbers}" 
+						  				th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}">
+							     <li th:class="${pageNumber==listCVs.number + 1} ? 'active page-item' : 'page-item'">
+							     	<a th:href="@{${urlBuilder.replaceQueryParam('page', pageNumber).toUriString()}}"
+									        th:text=${pageNumber}
+									        class="page-link">
+									 </a>
+								</li>
+							</th:block>
+						  </ul>
+						</nav>
+					</div>
 	        	</div>	
         </div>
     </div>    

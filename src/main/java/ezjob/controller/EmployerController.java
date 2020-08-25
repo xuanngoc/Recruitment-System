@@ -9,11 +9,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -26,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import ch.qos.logback.core.joran.conditional.ElseAction;
+import ezjob.model.ApplyingCV;
 import ezjob.model.Employer;
 import ezjob.model.Job;
 import ezjob.service.ApplyingCVService;
@@ -38,6 +47,9 @@ import ezjob.service.SkillTagService;
 public class EmployerController {
 	
 	private static final String UPLOAD_DIR = "Assets\\image\\";
+	
+	@Value("${ezjob.pageSize}")
+	private int pageSize  = 10; // default value if ezjob.pageSize in application.properties not exists
 	
 	private EmployerService employerService;
 	private JobService jobService;
@@ -66,6 +78,11 @@ public class EmployerController {
 		this.applyingCVService = applyingCVService;
 	}
 	
+	@GetMapping("") 
+	public String redirectJobPage() {
+		return "redirect:/employer/job";
+	}
+ 	
 	@GetMapping(path = {"info"})
 	public String info(Authentication authentication, Model model) {
 		Employer employer = employerService.getEmployerByUsername(authentication.getName());
@@ -76,12 +93,10 @@ public class EmployerController {
 	@PostMapping("/info")
 	public String updateInfo(@RequestParam(name = "path_file_image" , required = false) MultipartFile file, Employer employer) throws IOException {
 		if (file != null) {
-			System.out.println(file);
 			String fileName = UPLOAD_DIR + employer.getEmployerId() + ".png";
 			in.close();
 	        try {
 	            Path path = Paths.get(fileName);
-	            
 	            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 	            employer.setPathFileImage(fileName);
 	        } catch (IOException e) {
@@ -101,12 +116,35 @@ public class EmployerController {
  			SecurityContextHolder.getContext().getAuthentication();'
 	 */
 	
-	@GetMapping(path = {"" ,"job"})
-	public String jobManage(Authentication authentication, Model model) {
+	@GetMapping(path = "job")
+	public String jobManage(Authentication authentication,
+			Model model,
+			@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) String q) {
+		if (page == null) {
+			page = 1;
+		}
+		Pageable pageable = PageRequest.of(page - 1, pageSize);
 		long employerId = employerService.getEmployerIdByUsername(authentication.getName());
-		model.addAttribute("jobs", jobService.getJobsByEmployerId(employerId));
+		Page<Job> pages;
+		if (q == null) {
+			pages = jobService.getJobsByEmployerId(employerId, pageable);
+		} else {
+			pages = jobService.getJobByTitleContainning(employerId, q, pageable);
+		}
+		
+		model.addAttribute("jobs", pages);
+		int totalPages = pages.getTotalPages();
+		if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                .boxed()
+                .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+		//model.addAttribute("pageNumbers", totalPages);
 		return "employer/job/job";
 	}
+	
 	
 	@GetMapping("job/{id}")
 	public String detailJob(@PathVariable long id, Model model) {
@@ -151,11 +189,34 @@ public class EmployerController {
 	}
 	
 	@GetMapping("job/{id}/candidates")
-	public String listCanditatesByJobId(@PathVariable long id, Model model) {
-		model.addAttribute("listCVs", applyingCVService.getApplyingCVsByJobId(id));
+	public String listCanditatesByJobId(@PathVariable long id,
+			Model model,
+			@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) String q) {
+		
+		if (page == null) {
+			page = 1;
+		}
+		
+		Page<ApplyingCV> pages;
+		Pageable pageable = PageRequest.of(page - 1, pageSize);
+		if (q == null) {
+			pages = applyingCVService.getApplyingCVsByJobId(id, pageable);
+		} else {
+			pages = applyingCVService.getApplyingCVByJobIdAndTitleContainning(id, q, pageable);
+		}
+		model.addAttribute("jobId", id);
+		model.addAttribute("listCVs", pages);
+		int totalPages = pages.getTotalPages();
+		if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                .boxed()
+                .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+		
 		return "employer/job/list-cv-applyed";
 	}
-	
 	
 	@GetMapping(
 			  value = "/{id}/image",
