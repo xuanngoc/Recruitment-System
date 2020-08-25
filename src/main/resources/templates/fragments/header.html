@@ -5,6 +5,10 @@
 		<div class="row" >
             <nav class="col-12 navbar navbar-expand-lg position-fixed" id="horizontal-bar">
                 <a class="logo" href="/">EZ Jobs</a>
+                <div class="row h-100 align-items-end ml-2">
+                	<span sec:authorize="hasAuthority('MANAGER')" class="text-info">Admin</span>
+                	<span sec:authorize="hasAuthority('EMPLOYER')" class="text-info">Employer</span>
+                </div> 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">                	
                     <span class="mr-auto"></span> 
                     <a sec:authorize="hasAuthority('MANAGER')" class="btn" th:href="@{/management/}">Quản lý</a>
@@ -27,7 +31,7 @@
                     </ul>
                     <ul class="navbar-nav mr-5" sec:authorize="isAnonymous()">               	
                         <li class="nav-item mr-4">
-	                        <a class="btn" th:href="employer-register" style="color: black">Đăng ký nhà tuyển dụng</a>
+	                        <a class="btn" th:href="/employer-register" style="color: black">Đăng ký nhà tuyển dụng</a>
 	                    </li>
 	                    <li class="nav-item">
 	                        <a class="btn" th:href="/login" style="color: black">Đăng nhập</a>

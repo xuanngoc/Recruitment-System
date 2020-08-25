@@ -1,8 +1,10 @@
 package ezjob.service;
 
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ezjob.model.ApplyingCV;
@@ -22,8 +24,12 @@ public class ApplyingCVService {
 		return appyingCVRepository.findPathFileCvById(id);
 	}
 	
-	public List<ApplyingCV> getApplyingCVsByJobId(long id) {
-		return appyingCVRepository.findByJobId(id);
+	public Page<ApplyingCV> getApplyingCVsByJobId(long id, Pageable pageable) {
+		return appyingCVRepository.findByJobId(id, pageable);
+	}
+	
+	public Page<ApplyingCV> getApplyingCVByJobIdAndTitleContainning(long id, String name, Pageable pageable) {
+		return appyingCVRepository.findByJobIdAndTitleContainning(id, name, pageable);
 	}
 	
 	public void saveOrUpdate(ApplyingCV cv) {

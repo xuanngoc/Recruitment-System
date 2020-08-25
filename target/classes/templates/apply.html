@@ -6,10 +6,9 @@
     <title>EZ Jobs | ApplyCV </title>
 </head>
 <body>
-<div layout:fragment="content" th:remove="tag" id="content">
-		<div class="bg-light vh-100">
-    	<div class="container " style="background-color: #7ed6df" >
-      	<div class="row">
+<div layout:fragment="content" th:remove="tag" id="content" class="bg-light">
+    	<div class="container bg-white ">
+      	<div class="row mt-5">
       	<div class="col-3"></div>
        	 <div class="col-6">
         	  <form class="mb-5" th:action=@{apply} method="POST"  enctype="multipart/form-data" onsubmit="return onCheckValidation()">
@@ -62,7 +61,7 @@
     			     	<input type="file" class="form-control-file" accept=".pdf" name="path_file_cv" 
              		 		onchange="showUp1()" id="file1" th:value="${path_file_cv}" style="display: none;" > 
              		 	<span class="mr-3" id="file1-name" style="display: none;"></span> 
-             		 	<label id="selectFile" class="btn btn-primary mt-2" for="file1">Chọn CV</label>
+             		 	<label id="selectFile" class="btn btn-info mt-2" for="file1">Chọn CV</label>
     			     </div>
     			      		  
              		 
@@ -97,7 +96,8 @@
      	  	 </script>
     	  </div>
     	</div>
-       	</div>
+    
+       	
 </div>
 
 
