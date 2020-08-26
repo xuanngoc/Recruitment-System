@@ -48,9 +48,8 @@
 					    <tr th:each="job, index : ${jobs}">
 					      <th scope="row" th:text="${index.count}">1</th>
 					      <td th:text="${job.title}">Mark</td>
-					      <td th:text="${''+ T(ezjob.util.DateUtil).getDateFormat(job.postedTime)}">
-					      	<span class="text-danger col-md-6 text-right" th:if="${job.closed == true}"> - Đã ngừng</span>
-					      </td>
+					      <td th:if="${job.closed != true}" th:text="${''+ T(ezjob.util.DateUtil).getDateFormat(job.postedTime)}"></td>
+					      <td  th:if="${job.closed == true}" class="text-danger ml-3">Đã ngừng</td>
 					      <td><a class="btn btn-primary" th:href="@{'job/' + ${job.jobId} + '/candidates'}" >Xem chi tiết</a> </td>
 					      <td><a class="btn btn-info" th:href="@{'job/' + ${job.jobId}}" >Xem thông tin công việc</a> </td>
 					    </tr>
