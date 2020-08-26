@@ -60,7 +60,8 @@ public class JobService {
 		return jobRepository.findByCityAndDescription(city, description);
 	}
 	
+	public Page<Job> getJobBySkilTag(String skillTagName, Pageable pageable) {
+		return jobRepository.findBySkill(skillTagName, pageable);
+	}
 	
-	
-
 }
