@@ -34,7 +34,7 @@
 					<label for="salary">Mức lương</label>
 				    <input type="text" class="form-control input" id="salary" th:field=*{salary} disabled required>
 				</div>
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label for="salary">Kĩ năng:</label> <br/>
 					<th:block th:each="skill : ${skillTags}">
 						<input type="checkbox" name="skilltags" class="input mr-2" th:checked="${#lists.contains(job.skillTags,''+ skill)}"
@@ -46,10 +46,23 @@
 			        	<span class="mr-3"></span>
 					</th:block>
 					       
+				</div> -->
+				<div class="form-group">
+					<label for="salary">Kĩ năng</label>
+					<div class="row mr-5 ml-5">
+						<div class="col-4" th:each="skill : ${skillTags}">
+							<input class="mr-3" type="checkbox" name="skilltags" 
+				            th:text="${skill.skillTagName}"
+				            th:value="${skill.skillTagId}"
+				            th:field="*{skillTags}"
+				        	/>
+						</div>
+						
+				    </div>
 				</div>
 				<div class="form-group">
 					<label for="description">Mô tả</label>
-					<textarea class="form-control input" id="description" rows="40" th:field=*{description} disabled required></textarea>
+					<textarea class="form-control input" id="description" rows="40" th:field=*{description} disabled ></textarea>
 				</div>
 				<div class="row">
 				<div class="col-md-4"></div>

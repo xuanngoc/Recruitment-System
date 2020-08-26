@@ -11,7 +11,7 @@ import ezjob.model.Job;
 
 public interface JobRepository extends JpaRepository<Job, Long>{
 
-	@Query(value = "SELECT * FROM JOB WHERE EMPLOYER_ID = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM JOB WHERE EMPLOYER_ID = ?1 ORDER BY posted_time DESC", nativeQuery = true)
 	public Page<Job> findJobByEmployerId(long id, Pageable pageable);
 	
 	  @Query(value = "select distinct j.* from job j "
