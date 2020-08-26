@@ -27,4 +27,17 @@ public interface JobRepository extends JpaRepository<Job, Long>{
 	@Query(value = "SELECT * FROM JOB WHERE employer_id = ?1 AND title LIKE CONCAT('%',?2,'%')", nativeQuery = true)  
 	public Page<Job> findByEmployerIdAndTitleContaining(long id, String title, Pageable pageable);
 	
+	@Query(value = "SELECT j.job_id, description, posted_time, salary, title, employer_id, closed FROM job j "
+			+ "INNER JOIN (SELECT js.job_id FROM jobs_skill_tags js "
+				+ "INNER JOIN (select skill_tag_id from skill_tag where skill_tag_name = ?1) s"
+					+ " on js.skill_tag_id = s.skill_tag_id ) jj "
+				+ " on j.job_id = jj.job_id ",
+				nativeQuery = true,
+				countQuery = "SELECT COUNT(1) FROM job jb "
+						+ "INNER JOIN (SELECT js.job_id FROM jobs_skill_tags js "
+						+ "INNER JOIN (select skill_tag_id from skill_tag where skill_tag_name = ?1) s"
+							+ " on js.skill_tag_id = s.skill_tag_id ) jj "
+						+ " on jb.job_id = jj.job_id ")
+	public Page<Job> findBySkill(String skill, Pageable pageable);
+	
 }

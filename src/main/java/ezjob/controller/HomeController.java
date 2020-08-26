@@ -16,11 +16,17 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.ContentTypeOptionsConfig;
 import org.springframework.security.core.Authentication;
 import org.springframework.http.MediaType;
@@ -61,6 +67,9 @@ public class HomeController {
 	private JobService jobService;
 	private CandidateService candidateService;
 	private ApplyingCVService applyingService;
+	
+	@Value("${ezjob.pageSize}")
+	private int pageSize  = 10;
 	
 	@Autowired
 	public void setApplyingService(ApplyingCVService applyingService) {
@@ -152,6 +161,26 @@ public class HomeController {
 		model.addAttribute("job", jobService.getJobById(id));
 		return "detail-job";
 	}
+
+	@GetMapping("/job/skill/{skillName}")
+	public String showJobBySkillTagName(Model model,
+			@PathVariable String skillName,
+			@RequestParam(required = false) Integer page) {
+		if (page == null) {
+			page = 1;
+		}
+		Pageable pageable = PageRequest.of(page - 1, pageSize);
+		Page<Job> jobs = jobService.getJobBySkilTag(skillName, pageable);
+		model.addAttribute("jobs", jobs);
+		int totalPages = jobs.getTotalPages();
+		if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                .boxed()
+                .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+		return "job-by-skill";
+	}
 	
 	@GetMapping(path= "job/{id}/apply" )
 	public String info(@PathVariable long id, Model model, Authentication authentication)  {
@@ -159,14 +188,8 @@ public class HomeController {
 		if(authentication != null) {
 			String name = authentication.getName();
 		    Candidate candidate = candidateService.getCandidateByUserName(name);
-			/*
-			 * String fileName = candidate.getPath_file_cv(); if (fileName != null) {
-			 * model.addAttribute("path_file_cv", fileName); }
-			 * model.addAttribute("fullname", candidate.getF)
-			 */
 		    
 		    model.addAttribute("candidate", candidate);
-		    
 		}
 			
 		return "apply";

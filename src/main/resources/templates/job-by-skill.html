@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/home-layout}">
+<head>
+    <title>EZ Jobs | Home</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag" id="content" >
+    <div id="content" class="mb-5">
+    	<div class="bg-search" >
+    		<div class="container">
+	            <div>
+	                <form class="row form-inline align-items-center" action="/" id="form-search" method="GET">
+	                    <div class="form-group col-sm-7 col-md-7 col-lg-7 col-xl-7">
+	                        <input type="text" name="searchText" id="searchBar" class="form-control form-item  w-100" placeholder="Kỹ năng, công ty, công việc, .."  th:value="${searchText}">
+	                    </div>
+	                    <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+	                        <select class="custom-select form-item w-100" name="city" id="city">
+	                            <option value="Hà Nội" selected>Hà Nội</option>
+	                            <option value="Đà Nẵng">Đà Nẵng</option>
+	                            <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+	                            <option value="Khác">Khác</option>
+	                        </select>
+	                    </div>
+	                    <div class="form-group col-sm-2 col-md-2 col-lg-2 col-xl-2">
+	                        <button class="btn btn-secondary bg-light form-item w-100 form-item" type="submit"><i class="fas text-dark fa-search mr-2"></i></button>
+	                    </div>
+	                </form>
+	            </div>
+	        </div>
+        </div>
+        <div class="container">
+        	<th:block th:if="${jobs != null}">
+        		<div class="row">
+	        		<div class="col-sm-12 col-md-10 offset-md-1"  th:if="${!jobs.empty}">
+		        		<th:block th:each="job : ${jobs}">
+		        		<div class="card mt-3">
+						    <div class="card-body">
+							    <h4><a th:href="@{'/job/' + ${job.jobId}}" th:text="${job.title}"></a></h4>
+							    <h6 class="text-secondary" th:text="'$ ' + ${job.salary}"></h6>
+							    <p class="card-text" th:text="${job.description}" 
+							    	style="overflow: hidden; text-overflow: ellipsis; height: 70px">
+							    </p>
+							    
+							    <span class="badge badge-info mr-2" th:each="skill : ${job.skillTags}" th:text="${skill.skillTagName}"></span>
+						  		
+						  		<div class="row mt-3">
+						  			<span class="text-warning col-md-6" 
+						  				th:text="${'Ngày đăng: ' + T(ezjob.util.DateUtil).getDateFormat(job.postedTime)}"></span>
+						  			<span class="text-danger col-md-6 text-right" th:if="${job.closed == true}">Đã ngừng</span>
+						  		</div>
+						  		
+						  		
+						  	</div>
+						</div>
+						
+						</th:block>
+						<div class="row justify-content-center mt-5" th:if="${jobs.totalPages > 1}">
+							<nav aria-label="...">
+							  <ul class="pagination" >
+							  	<th:block th:each="pageNumber : ${pageNumbers}" 
+							  				th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}">
+								     <li th:class="${pageNumber==jobs.number + 1} ? 'active page-item' : 'page-item'">
+								     	<a th:href="@{${urlBuilder.replaceQueryParam('page', pageNumber).toUriString()}}"
+										        th:text=${pageNumber}
+										        class="page-link">
+										 </a>
+									</li>
+								</th:block>
+							  </ul>
+							</nav>
+						</div>
+		        	</div>
+		        	<div class="col-12 text-center" th:if="${jobs.empty}">Không có kết quả</div>
+		        </div>
+	        	
+        	</th:block>
+        </div>
+        
+	</div>
+</div>
+</body>
+</html>
