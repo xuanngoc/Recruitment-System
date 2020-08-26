@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="icon" th:href="@{/img/favicon.png}">
+	
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}"/>
+   
+	
+    <title>EZ | error</title>
+</head>
+<body>
+	<div class="container  vh-100">
+		<div class="row align-items-center  h-100" >
+			<div class="col-12 ">
+				<div class="row justify-content-center mt-5">
+					<h1 style="font-size: 230px;" th:text="${code}"></h1>
+				</div>
+				<div class="row justify-content-center mt-5">
+			
+					<th:block th:switch="${code}">
+						<h1 th:case="'404'">Page not found</h1>
+					    <h1 th:case="'403'">Không có quyền truy cập!</h1>
+					    <div th:case="*">
+					    	<h1>Somethings <span class="text-primary">went</span> wrong!</h1>
+					    </div>
+					</th:block>
+				</div>
+		    	
+		   </div>
+		   
+		</div>
+    </div>
+
+</body>
+</html>
