@@ -17,10 +17,6 @@ public interface EmployerRepository extends JpaRepository<Employer, Long> {
 	  		" order by total_job DESC limit 9 " , nativeQuery = true)
 	 
 
-	/*
-	 * @Query("select new ezjob.model.dto.CompanyDTO(employerId, companyName, size) from Employer"
-	 * )
-	 */
 	public List<Object> findCompanyNameTop9ByTotalJobPosted();
 
 }

@@ -1,0 +1,1 @@
+insert into users(user_name, password, role) values('admin', '123123', 'MANAGER')
