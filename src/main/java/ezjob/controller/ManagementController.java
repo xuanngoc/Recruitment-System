@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import ezjob.model.SkillTag;
 import ezjob.service.EmployerRegisterService;
@@ -15,35 +16,33 @@ import ezjob.service.SkillTagService;
 import ezjob.service.UserDetailServiceImp;
 
 @Controller
-@RequestMapping("/management/")
+@RequestMapping(path =  "/management/")
 public class ManagementController {
 
+	@Autowired
 	private SkillTagService skillTagService;
+	@Autowired
 	private EmployerRegisterService employerRegisterService;
+	@Autowired
 	private UserDetailServiceImp userDetailServiceImp;
+	@Autowired
 	private EmployerService employerService;
 	
 	
-	@Autowired
-	public void setSkillTagService(SkillTagService skillTagService) {
-		this.skillTagService = skillTagService;
-	}
-	
-	@Autowired
-	public void setEmployerRegisterService(EmployerRegisterService employerRegisterService) {
-		this.employerRegisterService = employerRegisterService;
-	}
-	
-	@Autowired
-	public void setUserDetailServiceImp(UserDetailServiceImp userDetailServiceImp) {
-		this.userDetailServiceImp = userDetailServiceImp;
-	}
-	
-	@Autowired
-	public void setEmployerService(EmployerService employerService) {
-		this.employerService = employerService;
-	}
-
+	/*
+	 * //@Autowired public void setSkillTagService(SkillTagService skillTagService)
+	 * { this.skillTagService = skillTagService; }
+	 * 
+	 * @Autowired public void setEmployerRegisterService(EmployerRegisterService
+	 * employerRegisterService) { this.employerRegisterService =
+	 * employerRegisterService; }
+	 * 
+	 * @Autowired public void setUserDetailServiceImp(UserDetailServiceImp
+	 * userDetailServiceImp) { this.userDetailServiceImp = userDetailServiceImp; }
+	 * 
+	 * @Autowired public void setEmployerService(EmployerService employerService) {
+	 * this.employerService = employerService; }
+	 */
 	@GetMapping()
 	public String management() {
 		return "redirect:employer-register-request";

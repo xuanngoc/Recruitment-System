@@ -28,9 +28,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			response.sendRedirect("/employer/");
 		} else {
 			response.sendRedirect("/");
-		}
-		
+		}		
 	}
-	
-	
+
 }
