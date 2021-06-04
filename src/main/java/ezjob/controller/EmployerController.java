@@ -94,7 +94,7 @@ public class EmployerController {
 	public String updateInfo(@RequestParam(name = "path_file_image" , required = false) MultipartFile file, Employer employer) throws IOException {
 		if (file != null) {
 			String fileName = UPLOAD_DIR + employer.getEmployerId() + ".png";
-			in.close();
+			//in.close();
 	        try {
 	            Path path = Paths.get(fileName);
 	            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
