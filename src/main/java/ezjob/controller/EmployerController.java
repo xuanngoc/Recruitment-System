@@ -90,7 +90,7 @@ public class EmployerController {
 		return "employer/update-info";
 	}
 	
-	@PostMapping("/info")
+	@PostMapping("info")
 	public String updateInfo(@RequestParam(name = "path_file_image" , required = false) MultipartFile file, Employer employer) throws IOException {
 		if (file != null) {
 			String fileName = UPLOAD_DIR + employer.getEmployerId() + ".png";
